@@ -1,0 +1,23 @@
+{
+    "require": {
+        "omnipay/common": "^2.5",
+        "php": "^5.5.9",
+        "ext-soap": "*",
+        "guzzle/guzzle": "^3.9",
+        "guzzlehttp/promises": "^1.2"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.6",
+        "phpunit/phpunit": "~4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Clapp\\OtpHu\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "./tests"
+        ]
+    }
+}
