@@ -51,6 +51,7 @@ class GatewayTest extends TestCase{
                  */
                 echo $response->getMessage();
             }
+        }
         catch(ValidationException $e){
             /**
              * hiányzó shopid, hiányzó vagy hibás private key, vagy hiányzó felhasználó adatok
@@ -81,7 +82,7 @@ class GatewayTest extends TestCase{
 
                 echo $response->getMessage();
             }
-
+        }
         catch (Exception $e) {
             // internal error, log exception and display a generic message to the customer
             exit('Sorry, there was an error processing your payment. Please try again later.');
