@@ -4,7 +4,7 @@ namespace Clapp\OtpHu\Request;
 use LSS\Array2XML;
 
 
-class GenerateTransactionIdRequest extends AbstractRequest{
+class PaymentRequest extends AbstractRequest{
 
     protected $actionName = 'WEBSHOPFIZETESINDITAS';
 

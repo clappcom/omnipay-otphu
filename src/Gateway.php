@@ -4,7 +4,9 @@ namespace Clapp\OtpHu;
 
 use Omnipay\Common\AbstractGateway;
 use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
+use Clapp\OtpHu\Request\PaymentRequest;
 use SimpleXMLElement;
+
 
 
 class Gateway extends AbstractGateway{

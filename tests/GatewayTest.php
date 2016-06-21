@@ -60,12 +60,15 @@ class GatewayTest extends TestCase{
         catch (Exception $e) {
             // internal error, log exception and display a generic message to the customer
             echo $e->getMessage();
+
+            echo("\n\n".$e->getTraceAsString()."\n");
             exit("\n".'Sorry, there was an error processing your payment. Please try again later.');
 
         }
     }
 
     public function testCompletePurchase(){
+        return;
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
 
         $gateway->setShopId("#02299991");
