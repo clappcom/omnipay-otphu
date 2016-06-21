@@ -59,7 +59,9 @@ class GatewayTest extends TestCase{
         }
         catch (Exception $e) {
             // internal error, log exception and display a generic message to the customer
-            exit('Sorry, there was an error processing your payment. Please try again later.');
+            echo $e->getMessage();
+            exit("\n".'Sorry, there was an error processing your payment. Please try again later.');
+
         }
     }
 

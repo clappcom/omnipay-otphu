@@ -4,7 +4,8 @@
         "php": "^5.5.9",
         "ext-soap": "*",
         "guzzle/guzzle": "^3.9",
-        "guzzlehttp/promises": "^1.2"
+        "guzzlehttp/promises": "^1.2",
+        "openlss/lib-array2xml": "^0.0.10"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
