@@ -63,34 +63,46 @@ class GatewayTest extends TestCase{
 
             echo("\n\n".$e->getTraceAsString()."\n");
             exit("\n".'Sorry, there was an error processing your payment. Please try again later.');
-
         }
-    }
 
-    public function testCompletePurchase(){
-        return;
+        return $response->getTransactionId();
+    }
+    /**
+     * @depends testPurchase
+     */
+    public function testCompletePurchase($transactionId){
+
+        $transactionId = "16612512324721344612918321272635";
+
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
 
         $gateway->setShopId("#02299991");
         $gateway->setPrivateKey(file_get_contents("#02299991.privKey.pem"));
 
         try {
-            $response = $gateway->purchase([
+            $response = $gateway->completePurchase([
                 'transactionId' => $transactionId,
             ])->send();
             if ($response->isSuccessful()) {
                 // payment was successful: update database
-
-                print_r($response);
-            }  else {
+                echo 'SUCCESSFUL: ';
+                print_r($response->getTransactionId());
+            } else if ($response->isPending()){
+                echo 'PENDING: ';
+                print_r($response->getTransactionId());
+            } else if ($response->isCancelled()){
+                echo 'CANCELLED: ';
+                print_r($response->getTransactionId());
+            } else {
                 // payment failed: display message to customer
-
+                echo 'FAILED';
                 echo $response->getMessage();
             }
         }
         catch (Exception $e) {
             // internal error, log exception and display a generic message to the customer
-            exit('Sorry, there was an error processing your payment. Please try again later.');
+            //exit('Sorry, there was an error processing your payment. Please try again later.');
+            throw $e;
         }
     }
 }
