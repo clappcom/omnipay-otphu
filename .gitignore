@@ -4,4 +4,3 @@ composer.lock
 composer.phar
 /tests/logs/*
 *.pem
-!#02299991.privKey.pem

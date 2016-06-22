@@ -7,6 +7,13 @@ use Illuminate\Validaton\ValidationException;
 
 class GatewayTest extends TestCase{
     public function testPurchase(){
+        $res=openssl_pkey_new();
+
+        // Get private key
+        openssl_pkey_export($res, $privkey);
+        var_dump($privKey);
+        exit;
+        return;
 
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
 
