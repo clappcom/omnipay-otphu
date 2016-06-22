@@ -1,7 +1,7 @@
 {
     "require": {
         "omnipay/common": "^2.5",
-        "php": "^5.5.9",
+        "php": "^5.5",
         "ext-soap": "*",
         "guzzle/guzzle": "^3.9",
         "openlss/lib-array2xml": "^0.0.10",
