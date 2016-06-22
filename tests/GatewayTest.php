@@ -72,8 +72,6 @@ class GatewayTest extends TestCase{
      */
     public function testCompletePurchase($transactionId){
 
-        $transactionId = "16612512324721344612918321272635";
-
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
 
         $gateway->setShopId("#02299991");
