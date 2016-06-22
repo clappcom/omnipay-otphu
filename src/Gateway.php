@@ -5,6 +5,7 @@ namespace Clapp\OtpHu;
 use Omnipay\Common\AbstractGateway;
 use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
 use Clapp\OtpHu\Request\PaymentRequest;
+use Clapp\OtpHu\Response\GenerateTransactionIdResponse;
 use SimpleXMLElement;
 
 
@@ -24,15 +25,16 @@ class Gateway extends AbstractGateway{
     }
 
     public function purchase($options){
-        $this->setTransactionId($this->generateTransactionId());
+        $generateTransactionIdResponse = $this->generateTransactionId();
+        $this->setTransactionId($generateTransactionIdResponse->getTransactionId());
 
-        $request = $this->createRequest("\\".PaymentRequest::class, $this->getParameters());
+        $request = $this->createRequest("\\".PaymentRequest::class, array_merge($options, $this->getParameters()));
 
         $request->validate(
             'shop_id',
             'private_key',
             'endpoint',
-            'transaction_id'
+            'transactionId'
         );
 
         return $request;
@@ -46,16 +48,7 @@ class Gateway extends AbstractGateway{
             'private_key',
             'endpoint'
         );
-
-        $response = $request->send();
-
-        try {
-            $transactionId = GenerateTransactionIdRequest::transformResponseBody($response);
-        }catch(\Exception $e){
-            throw new BadResponseException($response->getBody());
-        }
-
-        return $transactionId;
+        return $request->send();
     }
 
     public function completePurchase($options){
@@ -75,9 +68,9 @@ class Gateway extends AbstractGateway{
         return $this->getParameter("private_key");
     }
     public function setTransactionId($value){
-        return $this->setParameter("transaction_id", $value);
+        return $this->setParameter("transactionId", $value);
     }
     public function getTransactionId(){
-        return $this->getParameter("transaction_id");
+        return $this->getParameter("transactionId");
     }
 }

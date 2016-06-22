@@ -3,6 +3,8 @@ namespace Clapp\OtpHu\Request;
 
 use LSS\Array2XML;
 use SimpleXMLElement;
+use Guzzle\Http\Message\Response as GuzzleResponse;
+use Clapp\OtpHu\Response\GenerateTransactionIdResponse;
 
 
 class GenerateTransactionIdRequest extends AbstractRequest{
@@ -44,10 +46,8 @@ class GenerateTransactionIdRequest extends AbstractRequest{
          */
         return $this->getShopId();
     }
-    /**
-     * transactionId kiszedése a response bodyból
-     */
-    public static function transformResponseBody($response){
-        return (new SimpleXMLElement(base64_decode($response->xml()->xpath('//result')[0]->__toString())))->xpath('//id')[0]->__toString();
+
+    public function transformResponse(GuzzleResponse $response){
+        return new GenerateTransactionIdResponse($this, $response->getBody());
     }
 }

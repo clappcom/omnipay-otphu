@@ -4,6 +4,10 @@ namespace Clapp\OtpHu\Request;
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 use LSS\Array2XML;
 use DomDocument;
+use Clapp\OtpHu\BadResponseException;
+use Guzzle\Http\Exception\ServerErrorResponseException as GuzzleServerErrorResponseException;
+use Clapp\OtpHu\ServerErrorResponseException;
+use Guzzle\Http\Message\Response as GuzzleResponse;
 
 
 abstract class AbstractRequest extends BaseAbstractRequest{
@@ -52,14 +56,12 @@ abstract class AbstractRequest extends BaseAbstractRequest{
         $data = $this->getSignatureData();
         $signature = null;
         $key = openssl_get_privatekey($this->getPrivateKey());
-
         if (openssl_sign($data, $signature, $key, OPENSSL_ALGO_SHA512) === false) throw new \Exception('unable to generate signature');
-
         return bin2hex($signature);
     }
 
-    public static function transformResponseBody($response){
-        return $response->getBody();
+    public function transformResponse(GuzzleResponse $response){
+        return $response;
     }
 
     /**
@@ -77,12 +79,10 @@ abstract class AbstractRequest extends BaseAbstractRequest{
         );
 
         try {
-
-            $res = $request->send();
-            return $res;
-        }catch(\Exception $e){
-            echo ($e->getMessage());
-            echo ($e->getResponse()->getBody()->__toString()); exit;
+            $response = $request->send();
+            return $this->transformResponse($response);
+        }catch(GuzzleServerErrorResponseException $e){
+            throw ServerErrorResponseException::fromBase($e);
         }
     }
 
