@@ -4,7 +4,7 @@ namespace Clapp\OtpHu;
 use Guzzle\Http\Exception\ServerErrorResponseException as BaseServerErrorResponseException;
 use SimpleXMLElement;
 use Exception;
-use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Http\Exception\BadResponseException as BaseBadResponseException;
 
 /**
  * amikor http 200 a response, de a base64-elt body-ban hibaüzenet van
@@ -23,7 +23,7 @@ class ServerErrorResponseException extends BaseServerErrorResponseException{
         parent::__construct($message, $code, $previous);
     }
 
-    public static function fromBase(BadResponseException $e){
+    public static function fromBase(BaseBadResponseException $e){
         $ret = new static($e->getResponse()->getBody(), $e->getCode(), $e);
         $ret->setResponse($e->getResponse());
         return $ret;
