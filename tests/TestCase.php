@@ -25,6 +25,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase{
         if (empty($this->lastException) || !is_a($this->lastException, $className)){
             $this->fail('Failed to assert that last exception is subclass of '.$className);
         }
+        $this->lastException = null;
     }
 
     public function getDummyRsaPrivateKey(){

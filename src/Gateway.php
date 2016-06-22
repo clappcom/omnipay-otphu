@@ -8,12 +8,15 @@ use Clapp\OtpHu\Request\PaymentRequest;
 use Clapp\OtpHu\Request\TransactionDetailsRequest;
 use Clapp\OtpHu\Response\GenerateTransactionIdResponse;
 use SimpleXMLElement;
+use InvalidArgumentException;
 
 
 
 class Gateway extends AbstractGateway{
 
     protected $endpoint = "https://www.otpbankdirekt.hu/mwaccesspublic/mwaccess";
+
+    protected $transactionIdFactory = null;
 
     public function __construct(ClientInterface $httpClient = null, HttpRequest $httpRequest = null){
         parent::__construct($httpClient, $httpRequest);
@@ -26,14 +29,18 @@ class Gateway extends AbstractGateway{
     }
 
     public function purchase($options){
-
-        $transactionId = $this->getTransactionId();
+        $transactionId = $this->getTransactionId($options);
+         if (!empty($transactionId)){
+            $this->setTransactionId($transactionId);
+        }
         /**
          * generáltassunk az OTP-vel transactionId-t, ha nem lenne nekünk
          */
         if (empty($transactionId)){
-            $generateTransactionIdResponse = $this->generateTransactionId();
-            $transactionId = $generateTransactionIdResponse->getTransactionId();
+            if (empty($this->transactionIdFactory)){
+                throw new InvalidArgumentException('missing factory for auto generating transaction_id');
+            }
+            $transactionId = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
         }
         $this->setTransactionId($transactionId);
 
@@ -49,27 +56,8 @@ class Gateway extends AbstractGateway{
         return $request;
     }
 
-    protected function generateTransactionId(){
-        $request = $this->createRequest("\\".GenerateTransactionIdRequest::class, $this->getParameters());
-
-        $request->validate(
-            'shop_id',
-            'private_key',
-            'endpoint'
-        );
-        return $request->send();
-    }
-
     public function completePurchase($options){
-        $transactionId = $this->getTransactionId();
-        if (!empty($options)){
-            if (!empty($options['transactionId'])){
-                $transactionId = $options['transactionId'];
-            }
-            if (!empty($options['transaction_id'])){
-                $transactionId = $options['transaction_id'];
-            }
-        }
+        $transactionId = $this->getTransactionId($options);
         if (!empty($transactionId)){
             $this->setTransactionId($transactionId);
         }
@@ -84,12 +72,39 @@ class Gateway extends AbstractGateway{
         );
         return $request;
     }
+    /**
+     * override, hogy ha van shop_id-nk, akkor az menjen át a shop id getter függvényén
+     * ez azért fontos, mert az OTP-nél a testmode abban nyilvánul meg, hogy a shop_id egy "#" karakterrel kezdődik
+     */
+    public function getParameters(){
+        $params = parent::getParameters();
+        if (isset($params['shop_id'])) $params['shop_id'] = $this->getShopId();
+        return $params;
+    }
+
+    public function setTransactionIdFactory(TransactionIdFactory $factory){
+        $this->transactionIdFactory = $factory;
+        return $this;
+    }
+    public function getTransactionIdFactory(){
+        return $this->transactionIdFactory;
+    }
 
     public function setShopId($value){
         return $this->setParameter("shop_id", $value);
     }
     public function getShopId(){
-        return $this->getParameter("shop_id");
+        $value = $this->getParameter("shop_id");
+        /**
+         * testmode-ban van előtte "#" karakter, production módban nincsen
+         */
+        if (!empty($value)){
+            $value = ltrim($value, "#");
+        }
+        if ($this->getTestMode()){
+            $value = "#".$value;
+        }
+        return $value;
     }
     public function setPrivateKey($value){
         return $this->setParameter("private_key", $value);
@@ -100,7 +115,16 @@ class Gateway extends AbstractGateway{
     public function setTransactionId($value){
         return $this->setParameter("transactionId", $value);
     }
-    public function getTransactionId(){
-        return $this->getParameter("transactionId");
+    public function getTransactionId($options = []){
+        $transactionId = $this->getParameter("transactionId");
+        if (!empty($options)){
+            if (!empty($options['transactionId'])){
+                $transactionId = $options['transactionId'];
+            }
+            if (!empty($options['transaction_id'])){
+                $transactionId = $options['transaction_id'];
+            }
+        }
+        return $transactionId;
     }
 }
