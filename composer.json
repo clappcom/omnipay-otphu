@@ -1,4 +1,5 @@
 {
+    "name": "clapp/omnipay-otphu",
     "require": {
         "omnipay/common": "^2.5",
         "php": "^5.5",
