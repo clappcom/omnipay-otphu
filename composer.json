@@ -5,12 +5,12 @@
         "php": "^5.5",
         "ext-soap": "*",
         "guzzle/guzzle": "^3.9",
-        "openlss/lib-array2xml": "^0.0.10",
-        "satooshi/php-coveralls": "dev-master"
+        "openlss/lib-array2xml": "^0.0.10"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",
-        "phpunit/phpunit": "~4.8"
+        "phpunit/phpunit": "~4.8",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-4": {
