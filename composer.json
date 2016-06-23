@@ -1,7 +1,7 @@
 {
     "name": "clapp/omnipay-otphu",
     "require": {
-        "omnipay/common": "^2.5",
+        "omnipay/common": "dev-master",
         "php": "^5.5",
         "ext-soap": "*",
         "guzzle/guzzle": "^3.9",
