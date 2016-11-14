@@ -2,7 +2,7 @@
     "name": "clapp/omnipay-otphu",
     "require": {
         "omnipay/common": "dev-master",
-        "php": "^5.5",
+        "php": "^5.5.9 | ~7.0",
         "ext-soap": "*",
         "guzzle/guzzle": "^3.9",
         "openlss/lib-array2xml": "^0.0.10"
