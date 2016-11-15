@@ -67,12 +67,11 @@ class PaymentRequest extends AbstractRequest{
     protected function getSignatureData(){
         /**
          * •    Háromszereplős fizetési tranzakcó esetén:
-                o   shop-azonosító
-                o   tranzakcióazonosító
-                o   összeg
-                o   devizanem
-                o   regisztrált/regisztrálandó ügyfél azonosítója (csak regisztrált típusú fizetéskor)
-
+         *        o   shop-azonosító
+         *        o   tranzakcióazonosító
+         *        o   összeg
+         *        o   devizanem
+         *        o   regisztrált/regisztrálandó ügyfél azonosítója (csak regisztrált típusú fizetéskor)
          */
         $data = [
             $this->getShopId(),

@@ -15,6 +15,7 @@ class GenerateTransactionIdResponse extends AbstractResponse{
         parent::__construct($request, $data);
 
         try {
+
             $payload = base64_decode((new SimpleXMLElement($data))->xpath('//result')[0]->__toString());
             $transactionIdElement = (new SimpleXMLElement($payload))->xpath('//id');
             if (empty($transactionIdElement)){

@@ -35,6 +35,9 @@ class GatewayTest extends TestCase{
 
     public function testMissingTransactionIdFactory(){
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
+        $gateway->setShopId($this->faker->randomNumber);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+
         try {
             $gateway->purchase([]);
         }catch(InvalidArgumentException $e){
@@ -69,8 +72,10 @@ class GatewayTest extends TestCase{
         $this->assertLastException(InvalidRequestException::class);
     }
 
-    public function testTransactionIdWitFactory(){
+    public function testTransactionIdWithFactory(){
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
+        $gateway->setShopId($this->faker->randomNumber);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
 
         $mock = $this->getMockBuilder(TransactionIdFactory::class)
             ->setMethods([
