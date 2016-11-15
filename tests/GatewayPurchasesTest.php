@@ -12,6 +12,7 @@ use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as HttpClient;
 use Clapp\OtpHu\Response\UnknownShopIdResponse;
+use Clapp\OtpHu\ServerErrorResponseException;
 
 class GatewayPurchasesTest extends TestCase{
 
@@ -45,6 +46,30 @@ class GatewayPurchasesTest extends TestCase{
         $this->assertLastException(UnknownShopIdResponse::class);
 
         //$this->assertContainsOnly($request, $plugin->getReceivedRequests());
+    }
+    public function testUnknownServerError(){
+        $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(500));
+        $client = new HttpClient();
+        $client->addSubscriber($plugin);
+
+        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+
+        $gateway->setShopId($this->faker->randomNumber);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setTestMode(false);
+
+        try{
+            $request = $gateway->purchase([
+                'amount' => '100.00',
+                'currency' => 'HUF'
+            ]);
+            $response = $request->send();
+        }catch(ServerErrorResponseException $e){
+            $this->setLastException($e);
+        }
+        $this->assertLastException(ServerErrorResponseException::class);
     }
     public function testSuccessfulPurchase(){
         /**
