@@ -5,6 +5,7 @@ use Omnipay\Common\Message\AbstractResponse;
 use SimpleXMLElement;
 use Omnipay\Common\Message\RequestInterface;
 use Clapp\OtpHu\BadResponseException;
+use Exception;
 
 class GenerateTransactionIdResponse extends AbstractResponse{
 
@@ -15,7 +16,11 @@ class GenerateTransactionIdResponse extends AbstractResponse{
 
         try {
             $payload = base64_decode((new SimpleXMLElement($data))->xpath('//result')[0]->__toString());
-            $this->transactionId = (new SimpleXMLElement($payload))->xpath('//id')[0]->__toString();
+            $transactionIdElement = (new SimpleXMLElement($payload))->xpath('//id');
+            if (empty($transactionIdElement)){
+                throw new Exception('missing transaction id from response');
+            }
+            $this->transactionId = $transactionIdElement[0]->__toString();
         }catch(Exception $e){
             throw new BadResponseException($data);
         }

@@ -9,7 +9,8 @@ use Clapp\OtpHu\Request\TransactionDetailsRequest;
 use Clapp\OtpHu\Response\GenerateTransactionIdResponse;
 use SimpleXMLElement;
 use InvalidArgumentException;
-
+use Guzzle\Http\ClientInterface;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 
 class Gateway extends AbstractGateway{
@@ -33,6 +34,14 @@ class Gateway extends AbstractGateway{
          if (!empty($transactionId)){
             $this->setTransactionId($transactionId);
         }
+
+        $request = $this->createRequest("\\".PaymentRequest::class, array_merge($options, $this->getParameters()));
+
+        $request->validate(
+            'shop_id',
+            'private_key',
+            'endpoint'
+        );
         /**
          * generáltassunk az OTP-vel transactionId-t, ha nem lenne nekünk
          */
@@ -43,8 +52,6 @@ class Gateway extends AbstractGateway{
             $transactionId = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
         }
         $this->setTransactionId($transactionId);
-
-        $request = $this->createRequest("\\".PaymentRequest::class, array_merge($options, $this->getParameters()));
 
         $request->validate(
             'shop_id',

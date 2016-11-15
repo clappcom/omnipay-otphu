@@ -42,7 +42,7 @@ class GenerateTransactionIdRequest extends AbstractRequest{
     protected function getSignatureData(){
         /**
          * - Egyedi tranzakció kérés esetén:
-                - shop-azonosító
+         *       - shop-azonosító
          */
         return $this->getShopId();
     }
