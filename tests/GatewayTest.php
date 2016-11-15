@@ -33,6 +33,14 @@ class GatewayTest extends TestCase{
         $this->assertEquals($gateway->getShopId($shopId), $shopId);
     }
 
+    public function testPrivateKeyGetter(){
+        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+        $privateKey = $this->getDummyRsaPrivateKey();
+        $gateway->setPrivateKey($privateKey);
+
+        $this->assertEquals($privateKey, $gateway->getPrivateKey());
+    }
+
     public function testMissingTransactionIdFactory(){
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
         $gateway->setShopId($this->faker->randomNumber);
@@ -52,6 +60,18 @@ class GatewayTest extends TestCase{
         try{
             $gateway->purchase([
                 'transactionId' => $this->faker->creditCardNumber,
+            ]);
+        }catch(InvalidRequestException $e){
+            $this->setLastException($e);
+        }
+        $this->assertLastException(InvalidRequestException::class);
+    }
+    public function testTransactionIdWithoutFactoryOtherSyntax(){
+        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+
+        try{
+            $gateway->purchase([
+                'transaction_id' => $this->faker->creditCardNumber,
             ]);
         }catch(InvalidRequestException $e){
             $this->setLastException($e);
@@ -96,5 +116,7 @@ class GatewayTest extends TestCase{
             $this->setLastException($e);
         }
         $this->assertLastException(InvalidRequestException::class);
+
+        $this->assertTrue($gateway->getTransactionIdFactory() instanceof TransactionIdFactory);
     }
 }
