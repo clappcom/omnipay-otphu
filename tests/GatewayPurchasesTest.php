@@ -120,6 +120,44 @@ class GatewayPurchasesTest extends TestCase{
 
         //var_dump("REDIRECTED TO", $response->getRedirectUrl());
     }
+    public function testCompletePurchaseError(){
+
+        return;
+        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+
+        $transactionId = str_replace('-','',$this->faker->uuid);
+
+        $gateway->setShopId("02299991");
+        $gateway->setTransactionId($transactionId);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+        $gateway->setTestMode(true);
+
+        try {
+            $response = $gateway->completePurchase([
+                'transactionId' => $transactionId,
+            ])->send();
+            if ($response->isSuccessful()) {
+                // payment was successful: update database
+                echo 'SUCCESSFUL: ';
+                print_r($response->getTransactionId());
+            } else if ($response->isPending()){
+                echo 'PENDING: ';
+                print_r($response->getTransactionId());
+            } else if ($response->isCancelled()){
+                echo 'CANCELLED: ';
+                print_r($response->getTransactionId());
+            } else {
+                // payment failed: display message to customer
+                echo 'FAILED';
+                echo $response->getMessage();
+            }
+        }
+        catch (Exception $e) {
+            // internal error, log exception and display a generic message to the customer
+            //exit('Sorry, there was an error processing your payment. Please try again later.');
+            throw $e;
+        }
+    }
     public function testPurchase(){
         return;
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
