@@ -26,8 +26,9 @@ try {
 
     if ($response->isRedirect()){
         $redirectionUrl = $response->getRedirectUrl();
+        $transactionId = $response->getTransactionId();
         /**
-         * redirect the user to $redurectionUrl
+         * redirect the user to $redurectionUrl and store $transactionId for later use
          */
     }
 }catch(Exception $e){
