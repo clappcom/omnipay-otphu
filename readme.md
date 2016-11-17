@@ -6,7 +6,7 @@ Experimental package, not recommended for production.
 Usage
 ---
 
-```
+```php
 <?php
 include 'vendor/autoload.php';
 
@@ -37,7 +37,7 @@ try {
 }
 ```
 
-```
+```php
 // after the user is redirected back to our site by OTP
 <?php
 include 'vendor/autoload.php';
