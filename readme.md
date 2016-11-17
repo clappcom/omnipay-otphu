@@ -3,6 +3,22 @@ clapp/omnipay-otphu [![Build Status](https://travis-ci.org/dsge/omnipay-otphu.sv
 
 Experimental package, not recommended for production.
 
+Install
+---
+`composer.json`:
+```javascript
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/dsge/omnipay-otphu.git"
+    }
+],
+```
+
+```
+composer require clapp/omnipay-otphu:dev-master
+```
+
 Usage
 ---
 
