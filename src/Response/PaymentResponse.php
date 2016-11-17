@@ -6,6 +6,8 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\RequestInterface;
 use SimpleXMLElement;
 use Clapp\OtpHu\BadResponseException;
+use Clapp\OtpHu\Response\UnknownShopIdResponse;
+use Exception;
 
 class PaymentResponse extends AbstractResponse implements RedirectResponseInterface{
     /**
@@ -15,19 +17,50 @@ class PaymentResponse extends AbstractResponse implements RedirectResponseInterf
 
     protected $messageString = null;
 
+    public static $validMessageStrings = [
+        "SIKERESWEBSHOPFIZETESINDITAS"
+    ];
+
     public function __construct(RequestInterface $request, $data){
         parent::__construct($request, $data);
 
+        //var_dump($data."");
+
+        $this->messageString = $this->parseResponseData($data);
+    }
+    protected function parseResponseData ($data){
         try {
+            /**
+             * try to parse the successful response message
+             */
             $payload = base64_decode((new SimpleXMLElement($data))->xpath('//result')[0]->__toString());
-            $this->messageString = (new SimpleXMLElement($payload))->xpath('//message')[0]->__toString();
+            $messageString = (new SimpleXMLElement($payload))->xpath('//message')[0]->__toString();
         }catch(Exception $e){
-            throw new BadResponseException($data);
+            /**
+             * we cannot parse the response
+             */
+            $messageString = null;
         }
-        if ($this->messageString != "SIKERESWEBSHOPFIZETESINDITAS"){
-            throw new BadResponseException($data);
+
+        if (in_array($messageString, self::$validMessageStrings)){
+            return $messageString;
+        }
+
+        /**
+         * we have an invalid $messageString
+         *
+         * create the proper exception based on the value of $messageString
+         */
+        switch($messageString){
+            case 'HIANYZIKSHOPPUBLIKUSKULCS':
+                throw new UnknownShopIdResponse($data);
+            break;
+            default:
+                throw new BadResponseException($data);
+            break;
         }
     }
+
     /**
      * sikeresen kifizette-e az összeget a felhasználó
      * nem, mivel ez mindig redirectel, hiszen majd a banki felületen fog fizetni

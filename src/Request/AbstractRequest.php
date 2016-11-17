@@ -60,10 +60,6 @@ abstract class AbstractRequest extends BaseAbstractRequest{
         return bin2hex($signature);
     }
 
-    public function transformResponse(GuzzleResponse $response){
-        return $response;
-    }
-
     /**
      * transactionId generáltatása az otp szerverével
      */

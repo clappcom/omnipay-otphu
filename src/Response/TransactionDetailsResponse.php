@@ -15,11 +15,9 @@ class TransactionDetailsResponse extends AbstractResponse{
     public function __construct(RequestInterface $request, $data){
         parent::__construct($request, $data);
 
-        try {
-            $this->transaction = $this->parseTransaction($data);
-        }catch(Exception $e){
-            throw new BadResponseException($data);
-        }
+
+        $this->transaction = $this->parseTransaction($data);
+
     }
     /**
      * transaction adatainak kiszedése a raw response-ból
@@ -32,14 +30,18 @@ class TransactionDetailsResponse extends AbstractResponse{
             throw new BadResponseException($data);
         }
         if ($this->isCompleted($transaction)){
-            if (empty($this->transaction['responsecode'])) {
+            if (empty($transaction['responsecode'])){
                 throw new BadResponseException($data);
             }
-            if (intval($this->transaction['responsecode']) > 10){
-                throw new TransactionFailedException("", $this->transaction['responsecode']);
-            }
+            /*$responseCode = $transaction['responsecode'];
+            if (intval($responseCode) > 10){
+                throw new TransactionFailedException("", $responseCode);
+            }*/
         }
         return $transaction;
+    }
+    public function getTransaction(){
+        return $this->transaction;
     }
     /**
      * @override
@@ -64,7 +66,27 @@ class TransactionDetailsResponse extends AbstractResponse{
      * @return boolean
      */
     public function isSuccessful(){
-        return $this->isCompleted();
+        if (empty($this->transaction)) throw new Exception("no transaction details found");
+
+        if ($this->isCompleted()){
+            if (intval($this->transaction['responsecode']) <= 10){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Is the response rejected?
+     */
+    public function isRejected(){
+        if (empty($this->transaction)) throw new Exception("no transaction details found");
+
+        if ($this->isCompleted()){
+            if (intval($this->transaction['responsecode']) > 10){
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Is the transaction cancelled by the user?

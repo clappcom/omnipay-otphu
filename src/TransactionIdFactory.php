@@ -11,7 +11,7 @@ class TransactionIdFactory extends Gateway{
 
         $response = $request->send();
 
-        return $generateTransactionIdResponse->getTransactionId();
+        return $response->getTransactionId();
     }
 
     protected function getGenerateTransactionIdRequest($parameters){
