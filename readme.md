@@ -10,7 +10,7 @@ Usage
 <?php
 include 'vendor/autoload.php';
 
-$gateway = Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
+$gateway = Omnipay\Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
 
 $gateway->setShopId("0199123456");
 $gateway->setPrivateKey(file_get_contents('myShopKey.privKey.pem'));
@@ -42,7 +42,7 @@ try {
 <?php
 include 'vendor/autoload.php';
 
-$gateway = Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
+$gateway = Omnipay\Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
 
 $gateway->setShopId("0199123456");
 $gateway->setPrivateKey(file_get_contents('myShopKey.privKey.pem'));
