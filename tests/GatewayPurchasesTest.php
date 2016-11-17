@@ -68,6 +68,53 @@ class GatewayPurchasesTest extends TestCase{
         }
         $this->assertLastException(ServerErrorResponseException::class);
     }
+    /**
+     * @expectedException Clapp\OtpHu\BadResponseException
+     */
+    public function testBadResponseInvalidResponseBody(){
+        $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(200, null, "invalidsoapresponse"));
+        $client = new HttpClient();
+        $client->addSubscriber($plugin);
+
+        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+
+        $gateway->setShopId($this->faker->randomNumber);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setTestMode(false);
+
+        $request = $gateway->purchase([
+            'amount' => '100.00',
+            'currency' => 'HUF'
+        ]);
+        $response = $request->send();
+    }
+    /**
+     * @expectedException Clapp\OtpHu\BadResponseException
+     */
+    public function testBadResponseInvalidResponseMessage(){
+        /**
+         * response for "loremipsum" (invalid code)
+         */
+        $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(200, null, self::$invalidStatusCodeSuccessfulPurchaseResponseBody));
+        $client = new HttpClient();
+        $client->addSubscriber($plugin);
+
+        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+
+        $gateway->setShopId($this->faker->randomNumber);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setTestMode(false);
+
+        $request = $gateway->purchase([
+            'amount' => '100.00',
+            'currency' => 'HUF'
+        ]);
+        $response = $request->send();
+    }
     public function testSuccessfulPurchase(){
         /**
          * response for "SIKERESWEBSHOPFIZETESINDITAS"
