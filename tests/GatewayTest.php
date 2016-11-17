@@ -7,6 +7,9 @@ use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
 use Illuminate\Validaton\ValidationException;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
+use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Guzzle\Http\Client as HttpClient;
 
 class GatewayTest extends TestCase{
     public function testGatewayCreation(){
@@ -103,11 +106,15 @@ class GatewayTest extends TestCase{
             ])
             ->getMock();
 
+        $mockResponse = $this->getMockBuilder(GenerateTransactionIdRequest::class)
+            ->setConstructorArgs([new HttpClient(), new HttpRequest()])
+            ->getMock();
+
         $generatedTransactionId = $this->faker->creditCardNumber;
 
         $mock->expects($this->once())
             ->method('generateTransactionId')
-            ->will($this->returnValue($generatedTransactionId));
+            ->will($this->returnValue($mockResponse));
 
         $gateway->setTransactionIdFactory($mock);
         try{

@@ -8,10 +8,7 @@ class TransactionIdFactory extends Gateway{
 
     public function generateTransactionId($parameters){
         $request = $this->getGenerateTransactionIdRequest($parameters);
-
-        $response = $request->send();
-
-        return $response->getTransactionId();
+        return $request->send();
     }
 
     protected function getGenerateTransactionIdRequest($parameters){

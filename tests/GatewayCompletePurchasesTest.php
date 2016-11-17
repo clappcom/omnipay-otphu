@@ -31,6 +31,8 @@ class GatewayCompletePurchasesTest extends TestCase{
         $this->assertTrue($response->isPending());
         $this->assertFalse($response->isCancelled());
         $this->assertFalse($response->isRejected());
+
+        $this->assertNull($response->getRejectionReasonMessage());
     }
     public function testCompletePurchaseCancelled(){
         $plugin = new MockPlugin();
@@ -51,6 +53,8 @@ class GatewayCompletePurchasesTest extends TestCase{
         $this->assertFalse($response->isPending());
         $this->assertTrue($response->isCancelled());
         $this->assertFalse($response->isRejected());
+
+        $this->assertNull($response->getRejectionReasonMessage());
     }
     public function testCompletePurchaseRejected(){
         $plugin = new MockPlugin();
@@ -73,6 +77,8 @@ class GatewayCompletePurchasesTest extends TestCase{
         $this->assertFalse($response->isPending());
         $this->assertFalse($response->isCancelled());
         $this->assertTrue($response->isRejected());
+
+        $this->assertNotNull($response->getRejectionReasonMessage());
     }
     public function testCompletePurchaseCompleted($transactionId = null){
         $plugin = new MockPlugin();
@@ -94,5 +100,7 @@ class GatewayCompletePurchasesTest extends TestCase{
         $this->assertFalse($response->isPending());
         $this->assertFalse($response->isCancelled());
         $this->assertFalse($response->isRejected());
+
+        $this->assertNull($response->getRejectionReasonMessage());
     }
 }

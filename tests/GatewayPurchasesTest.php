@@ -42,7 +42,6 @@ class GatewayPurchasesTest extends TestCase{
             $this->setLastException($e);
         }
         $this->assertLastException(UnknownShopIdResponse::class);
-
         //$this->assertContainsOnly($request, $plugin->getReceivedRequests());
     }
     public function testUnknownServerError(){
@@ -85,23 +84,21 @@ class GatewayPurchasesTest extends TestCase{
         $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
         $gateway->setTestMode(false);
 
+        $request = $gateway->purchase([
+            'amount' => '100.00',
+            'currency' => 'HUF'
+        ]);
+        $response = $request->send();
 
-
-        try{
-            $request = $gateway->purchase([
-                'amount' => '100.00',
-                'currency' => 'HUF'
-            ]);
-            $response = $request->send();
-        }catch(UnknownShopIdResponse $e){
-            $this->setLastException($e);
-        }
         $this->assertEquals($gateway->getTransactionId(), $response->getTransactionId());
-
-        echo 'REDIRECT NEEDED TO'."\n";
-        $url = $response->getRedirectUrl();
-        echo $url . "\n\n";
-        echo $response->getTransactionId();
+        /**
+         * ez mindig false, mert a tranzakció nem fejeződött még be, nem terhelődött az összeg
+         */
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertNotEmpty($response->getRedirectUrl());
+        $this->assertEquals("GET", $response->getRedirectMethod());
+        $this->assertEquals([], $response->getRedirectData());
 
         return $response;
     }

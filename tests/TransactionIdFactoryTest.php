@@ -15,8 +15,24 @@ class TransactionIdFactoryTest extends TestCase{
 
         $transactionIdFactory = new TransactionIdFactory();
 
-        $transactionId = $transactionIdFactory->generateTransactionId([
+        $response = $transactionIdFactory->generateTransactionId([
 
+        ]);
+    }
+    /**
+     * @expectedException Clapp\OtpHu\BadResponseException
+     */
+    public function testBadResponse(){
+        $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(200, null, "invalidsoapresponse"));
+        $client = new HttpClient();
+        $client->addSubscriber($plugin);
+
+        $transactionIdFactory = new TransactionIdFactory($client);
+
+        $response = $transactionIdFactory->generateTransactionId([
+            'shop_id' => $this->faker->randomNumber,
+            'private_key' => $this->getDummyRsaPrivateKey(),
         ]);
     }
 
@@ -28,11 +44,12 @@ class TransactionIdFactoryTest extends TestCase{
 
         $transactionIdFactory = new TransactionIdFactory($client);
 
-        $transactionId = $transactionIdFactory->generateTransactionId([
+        $response = $transactionIdFactory->generateTransactionId([
             'shop_id' => $this->faker->randomNumber,
             'private_key' => $this->getDummyRsaPrivateKey(),
         ]);
 
-        $this->assertNotEmpty($transactionId);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNotEmpty($response->getTransactionId());
     }
 }

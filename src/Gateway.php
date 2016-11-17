@@ -49,7 +49,8 @@ class Gateway extends AbstractGateway{
             if (empty($this->transactionIdFactory)){
                 throw new InvalidArgumentException('missing factory for auto generating transaction_id');
             }
-            $transactionId = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
+            $response = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
+            $transactionId = $response->getTransactionId();
         }
         $this->setTransactionId($transactionId);
 
