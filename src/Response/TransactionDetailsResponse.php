@@ -47,14 +47,6 @@ class TransactionDetailsResponse extends AbstractResponse{
         return $this->transaction['transactionid'];
     }
     /**
-     * lezárult-e a tranzakció (akár sikeresen, akár sikertelenül)
-     */
-    protected function isCompleted($transaction = null){
-        if (empty($transaction)) $transaction = $this->transaction;
-        if (empty($transaction)) throw new Exception("no transaction details found");
-        return $transaction->isCompleted();
-    }
-    /**
      * Is the response successful?
      *
      * @return boolean
