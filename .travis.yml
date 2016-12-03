@@ -10,15 +10,15 @@ php:
 env:
   global:
     - setup=basic
-include:
-    - php: 5.5.9
-      env: setup=lowest
-    - php: 5.5.9
-      env: setup=stable
 matrix:
   allow_failures:
     - php: 7.1
     - php: nightly
+  include:
+    - php: 5.5.9
+      env: setup=lowest
+    - php: 5.5.9
+      env: setup=stable
 install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist --no-suggest; fi
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
