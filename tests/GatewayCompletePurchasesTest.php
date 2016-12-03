@@ -148,4 +148,22 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNull($response->getTransaction()->getRejectionReasonMessage());
     }
+    /**
+     * @expectedException Clapp\OtpHu\BadResponseException
+     */
+    public function testInvalidTransactionDetailsResponse(){
+        $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(200, null, "foobar"));
+        $client = new HttpClient();
+        $client->addSubscriber($plugin);
+
+        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+
+        $gateway->setShopId($this->faker->randomNumber);
+        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+
+        $response = $gateway->transactionDetails([
+            'transactionId' => 'myTransactionId',
+        ])->send();
+    }
 }
