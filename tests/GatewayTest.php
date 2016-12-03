@@ -48,6 +48,7 @@ class GatewayTest extends TestCase{
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
 
         try {
             $gateway->purchase([]);
@@ -99,6 +100,7 @@ class GatewayTest extends TestCase{
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
 
         $mock = $this->getMockBuilder(TransactionIdFactory::class)
             ->setMethods([

@@ -31,6 +31,7 @@ $gateway = Omnipay\Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
 $gateway->setShopId("0199123456");
 $gateway->setPrivateKey(file_get_contents('myShopKey.privKey.pem'));
 $gateway->setTransactionId('myGeneratedTransactionId');
+$gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
 $gateway->setTestMode(false);
 
 try {

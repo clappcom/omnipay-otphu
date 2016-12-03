@@ -40,7 +40,8 @@ class Gateway extends AbstractGateway{
         $request->validate(
             'shop_id',
             'private_key',
-            'endpoint'
+            'endpoint',
+            'customer_return_url'
         );
         /**
          * generáltassunk az OTP-vel transactionId-t, ha nem lenne nekünk
@@ -58,7 +59,8 @@ class Gateway extends AbstractGateway{
             'shop_id',
             'private_key',
             'endpoint',
-            'transactionId'
+            'transactionId',
+            'customer_return_url'
         );
 
         return $request;
@@ -138,5 +140,12 @@ class Gateway extends AbstractGateway{
             }
         }
         return $transactionId;
+    }
+
+    public function getCustomerReturnUrl(){
+        return $this->getParameter("customer_return_url");
+    }
+    public function setCustomerReturnUrl($value){
+        return $this->setParameter("customer_return_url", $value);
     }
 }

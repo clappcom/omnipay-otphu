@@ -28,6 +28,7 @@ class GatewayTestHelper extends TestCase{
         $gateway->setShopId("02299991");
         $gateway->setTransactionId($transactionId);
         $gateway->setPrivateKey(file_get_contents('#02299991.privKey.pem'));
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(true);
         try {
             $response = $gateway->purchase([

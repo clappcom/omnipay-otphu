@@ -29,7 +29,7 @@ class PaymentRequest extends AbstractRequest{
             'isMailAddressNeeded' => false,
             'isNarrationNeeded' => false,
             'isConsumerReceiptNeeded' => false,
-            'isBackURL' => 'http://www.google.com',
+            'isBackURL' => $this->getCustomerReturnUrl(),
             'isShopComment' => '',
             'isConsumerRegistrationNeeded' => false,
             //'isConsumerRegistrationID' => null,

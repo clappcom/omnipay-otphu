@@ -30,6 +30,7 @@ class GatewayPurchasesTest extends TestCase{
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         try{
@@ -55,6 +56,7 @@ class GatewayPurchasesTest extends TestCase{
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         try{
@@ -82,6 +84,7 @@ class GatewayPurchasesTest extends TestCase{
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         $request = $gateway->purchase([
@@ -107,6 +110,7 @@ class GatewayPurchasesTest extends TestCase{
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         $request = $gateway->purchase([
@@ -129,6 +133,7 @@ class GatewayPurchasesTest extends TestCase{
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         $request = $gateway->purchase([

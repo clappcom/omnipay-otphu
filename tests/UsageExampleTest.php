@@ -26,6 +26,7 @@ class UsageExampleTest extends TestCase{
         $gateway->setShopId("0199123456");
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setTransactionId('myGeneratedTransactionId');
+        $gateway->setCustomerReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         try {
