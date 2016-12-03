@@ -80,6 +80,10 @@ class Gateway extends AbstractGateway{
         );
         return $request;
     }
+
+    public function transactionDetails($options){
+        return $this->completePurchase($options);
+    }
     /**
      * override, hogy ha van shop_id-nk, akkor az menjen át a shop id getter függvényén
      * ez azért fontos, mert az OTP-nél a testmode abban nyilvánul meg, hogy a shop_id egy "#" karakterrel kezdődik

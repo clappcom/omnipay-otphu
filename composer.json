@@ -4,7 +4,8 @@
         "omnipay/common": "^2.5.1",
         "php": "^5.5.9 | ~7.0",
         "ext-soap": "*",
-        "openlss/lib-array2xml": "^0.0.10"
+        "openlss/lib-array2xml": "^0.0.10",
+        "nesbot/carbon": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",

@@ -70,7 +70,6 @@ try {
     $response = $gateway->completePurchase([
         'transactionId' => $gateway->getTransactionId(),
     ])->send();
-    $response = $request->send();
 
     if ($response->isSuccessful()){
         /**
@@ -91,8 +90,8 @@ try {
         /**
          * the payment gateway rejected the user's payment
          */
-        $reasonCode = $response->getTransaction()['statuscode']; //OTP's error code string
-        $reasonMessage = $response->getRejectionReasonMessage(); //human readable string
+         $reasonCode = $response->getTransaction()->getRejectionReasonCode(); //OTP's error code string
+         $reasonMessage = $response->getTransaction()->getRejectionReasonMessage(); //human readable string
     }
 }catch(Exception $e){
     /**
