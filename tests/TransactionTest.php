@@ -39,4 +39,9 @@ class TransactionTest extends TestCase{
         $transaction = new Transaction();
         $transaction->setRawTransaction(new SimpleXMLElement("<a></a>"));
     }
+    public function testEmptyStartDate(){
+        $transaction = new Transaction();
+        $transaction->setRawTransaction(new SimpleXMLElement("<a></a>"));
+        $this->assertNull($transaction->getStartDate());
+    }
 }
