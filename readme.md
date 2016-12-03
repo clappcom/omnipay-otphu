@@ -99,3 +99,8 @@ try {
      */
 }
 ```
+
+Documentation
+---
+
+In the `/docs` folder or [on Github Pages](https://dsge.github.io/omnipay-otphu/namespaces/Clapp.OtpHu.html).
