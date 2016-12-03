@@ -100,10 +100,4 @@ abstract class AbstractRequest extends BaseAbstractRequest{
     public function getEndpoint(){
         return $this->getParameter("endpoint");
     }
-    public function setCustomerReturnUrl($value){
-        return $this->setParameter("customer_return_url", $value);
-    }
-    public function getCustomerReturnUrl(){
-        return $this->getParameter("customer_return_url");
-    }
 }
