@@ -105,11 +105,7 @@ class Transaction{
      */
     public function setRawTransaction($rawTransaction = null){
         $this->rawTransaction = $rawTransaction;
-        try{
-            $this->formattedTransaction = json_decode(json_encode($rawTransaction));
-        }catch(Exception $e){
-            $this->formattedTransaction = null;
-        }
+        $this->formattedTransaction = json_decode(json_encode($rawTransaction));
     }
     /**
      * get the raw transaction details

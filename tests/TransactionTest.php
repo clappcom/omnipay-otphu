@@ -31,4 +31,12 @@ class TransactionTest extends TestCase{
         $this->assertNotNull($transaction->getEndDate());
         $this->assertInstanceof(Carbon::class, $transaction->getEndDate());
     }
+    public function testSetRawTransactionWithInvalidTransaction(){
+        $transaction = new Transaction();
+        $transaction->setRawTransaction("foobar");
+    }
+    public function testSetRawTransactionWithEmptyTransaction(){
+        $transaction = new Transaction();
+        $transaction->setRawTransaction(new SimpleXMLElement("<a></a>"));
+    }
 }
