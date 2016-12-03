@@ -25,6 +25,9 @@ class GatewayCompletePurchasesTest extends TestCase{
         $response = $gateway->completePurchase([
             'transactionId' => 'myTransactionId',
         ])->send();
+
+        $this->assertNotNull($response->getTransactionId());
+
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isPending());
         $this->assertFalse($response->isCancelled());

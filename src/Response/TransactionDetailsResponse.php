@@ -44,7 +44,7 @@ class TransactionDetailsResponse extends AbstractResponse{
      * @override
      */
     public function getTransactionId(){
-        return $this->transaction['transactionid'];
+        return $this->transaction->getTransactionId();
     }
     /**
      * Is the response successful?
