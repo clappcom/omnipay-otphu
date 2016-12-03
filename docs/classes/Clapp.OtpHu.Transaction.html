@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">137</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">119</span>
                                 </a>
                             </li>
                             <li>
@@ -144,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-300012921"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-646940509"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-300012921" class="accordion-body collapse in">
+            <div id="namespace-646940509" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1850640537"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1354223321"></a>
                                 <a href="../namespaces/Clapp.html" style="margin-left: 30px; padding-left: 0">Clapp</a>
             </div>
-            <div id="namespace-1850640537" class="accordion-body collapse ">
+            <div id="namespace-1354223321" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-320915545"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1849260796"></a>
                                 <a href="../namespaces/Clapp.OtpHu.html" style="margin-left: 30px; padding-left: 0">OtpHu</a>
             </div>
-            <div id="namespace-320915545" class="accordion-body collapse ">
+            <div id="namespace-1849260796" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2057728856"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1662511162"></a>
                                 <a href="../namespaces/Clapp.OtpHu.Request.html" style="margin-left: 30px; padding-left: 0">Request</a>
             </div>
-            <div id="namespace-2057728856" class="accordion-body collapse ">
+            <div id="namespace-1662511162" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -192,10 +192,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-814239460"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-109393137"></a>
                                 <a href="../namespaces/Clapp.OtpHu.Response.html" style="margin-left: 30px; padding-left: 0">Response</a>
             </div>
-            <div id="namespace-814239460" class="accordion-body collapse ">
+            <div id="namespace-109393137" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -251,7 +251,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\Clapp\OtpHu</small>Transaction</h1>
-                    <p><em>wrapper class for transaction details</em></p>
+                    <p><em>Wrapper class for transaction details.</em></p>
                     
                     
                                         
@@ -299,7 +299,7 @@
                                                             </section>
                             <section class="span4">
                                                                     <a href="../classes/Clapp.OtpHu.Transaction.html#property_rawTransaction" class="">$rawTransaction</a><br />
-                                                                    <a href="../classes/Clapp.OtpHu.Transaction.html#property_transaction" class="">$transaction</a><br />
+                                                                    <a href="../classes/Clapp.OtpHu.Transaction.html#property_formattedTransaction" class="">$formattedTransaction</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -357,13 +357,13 @@
             <a id="property_possibleRejectionErrorCodes" name="property_possibleRejectionErrorCodes" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$possibleRejectionErrorCodes</h3>
-                <pre class="signature">$possibleRejectionErrorCodes : </pre>
+                <pre class="signature">$possibleRejectionErrorCodes : array</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array
+                &mdash; List of human readable meanings for each error code string from the gateway                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -381,13 +381,13 @@
             <a id="property_rawTransaction" name="property_rawTransaction" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$rawTransaction</h3>
-                <pre class="signature">$rawTransaction : </pre>
+                <pre class="signature">$rawTransaction : array|null</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array|null
+                &mdash; the raw transaction details provided by the gateway                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -402,16 +402,45 @@
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="property_transaction" name="property_transaction" class="anchor"></a>
+            <a id="property_formattedTransaction" name="property_formattedTransaction" class="anchor"></a>
             <article class="property">
-                <h3 class="protected ">$transaction</h3>
-                <pre class="signature">$transaction : </pre>
-                <p><em></em></p>
-                
+                <h3 class="protected ">$formattedTransaction</h3>
+                <pre class="signature">$formattedTransaction : array|null</pre>
+                <p><em>example:</em></p>
+                <pre><code class="language-javascript">{
+   "transactionid":"17728f8f9f82313494043bb7224b2f6c",
+   "posid":"#02299991",
+   "state":"VEVOOLDAL_VISSZAVONT",
+   "responsecode":"VISSZAUTASITOTTFIZETES",
+   "shopinformed":"true",
+   "startdate":"20161116235449",
+   "enddate":"20161117000150",
+   "params":{
+      "input":{
+         "backurl":"http:\/\/www.google.com",
+         "exchange":"HUF",
+         "zipcodeneeded":"false",
+         "narrationneeded":"false",
+         "mailaddressneeded":"false",
+         "countyneeded":"FALSE",
+         "nameneeded":"false",
+         "languagecode":"hu",
+         "countryneeded":"FALSE",
+         "amount":"100",
+         "settlementneeded":"false",
+         "streetneeded":"false",
+         "consumerreceiptneeded":"FALSE",
+         "consumerregistrationneeded":"FALSE"
+      },
+      "output":{
+
+      }
+   }
+}</code></pre>
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                array|null
+                &mdash; easier to use version of $rawTransaction - only `StdObject`s and `Array`s                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -437,16 +466,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$rawTransaction = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(array  <span class="argument">$rawTransaction = null</span>) : void</pre>
+                <p><em>Create a new instance to parse a raw transaction object</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array</td>
                                 <td>$rawTransaction </td>
-                                <td></td>
+                                <td><p>the transaction details from the gateway</p></td>
                             </tr>
                                             </table>
                 
@@ -471,16 +500,16 @@
             <article class="method">
                 <h3 class="public ">setRawTransaction()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setRawTransaction(  <span class="argument">$rawTransaction = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">setRawTransaction(array  <span class="argument">$rawTransaction = null</span>) : void</pre>
+                <p><em>set the raw transaction details and parse it into $formattedTransaction</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array</td>
                                 <td>$rawTransaction </td>
-                                <td></td>
+                                <td><p>the transaction details from the gateway</p></td>
                             </tr>
                                             </table>
                 
@@ -505,13 +534,16 @@
             <article class="method">
                 <h3 class="public ">getRawTransaction()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getRawTransaction() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getRawTransaction() : array</pre>
+                <p><em>get the raw transaction details</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>raw transaction details from the gateway</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -531,13 +563,16 @@
             <article class="method">
                 <h3 class="public ">getStartDate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getStartDate() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getStartDate() : \Carbon\Carbon|null</pre>
+                <p><em>get the starting date of the first transaction of the results</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    \Carbon\Carbon|null
+                                            &mdash; <p>date instance</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -557,13 +592,16 @@
             <article class="method">
                 <h3 class="public ">getEndDate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getEndDate() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getEndDate() : \Carbon\Carbon|null</pre>
+                <p><em>get the ending date of the last transaction of the results</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    \Carbon\Carbon|null
+                                            &mdash; <p>date instance</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -583,21 +621,24 @@
             <article class="method">
                 <h3 class="public ">fromXml()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">fromXml(  <span class="argument">$xmlString</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">fromXml(string  <span class="argument">$xmlString</span>) : \Clapp\OtpHu\Transaction</pre>
+                <p><em>initialize a new Transaction instance from an xml string provided by the gateway</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$xmlString </td>
-                                <td></td>
+                                <td><p>the xml string provided by the gateway</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/Clapp.OtpHu.Transaction.html">\Clapp\OtpHu\Transaction</a>
+                                            &mdash; <p>transaction details instance</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -618,13 +659,16 @@
             <article class="method">
                 <h3 class="public ">getRejectionReasonCode()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getRejectionReasonCode() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getRejectionReasonCode() : string|null</pre>
+                <p><em>get the rejection code provided by the gateway</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string|null
+                                            &mdash; <p>rejection code from the gateway</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -644,13 +688,16 @@
             <article class="method">
                 <h3 class="public ">getRejectionReasonMessage()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getRejectionReasonMessage() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getRejectionReasonMessage() : string|null</pre>
+                <p><em>get the human readable version of the rejection reason</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string|null
+                                            &mdash; <p>human readable version of the rejection reason</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -670,13 +717,16 @@
             <article class="method">
                 <h3 class="public ">getTransactionId()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getTransactionId() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getTransactionId() : string</pre>
+                <p><em>get the transaction id</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>transaction id</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -696,13 +746,16 @@
             <article class="method">
                 <h3 class="public ">isCompleted()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">isCompleted() </pre>
-                <p><em>lezárult-e a tranzakció (akár sikeresen, akár sikertelenül)</em></p>
+                <pre class="signature" style="margin-right: 54px;">isCompleted() : boolean</pre>
+                <p><em>is this transaction completed (not pending)?</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>whether or not the transaction is completed</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -723,13 +776,14 @@
                 <h3 class="public ">isSuccessful()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">isSuccessful() : boolean</pre>
-                <p><em>Is the response successful?</em></p>
+                <p><em>Is this transaction successful?</em></p>
                 
 
                 
                 
                                     <h4>Returns</h4>
                     boolean
+                                            &mdash; <p>whether or not the transaction is completed and successful</p>
                                     				
                             </article>
         </div>
@@ -750,13 +804,16 @@
             <article class="method">
                 <h3 class="public ">isRejected()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">isRejected() </pre>
-                <p><em>Is the response rejected?</em></p>
+                <pre class="signature" style="margin-right: 54px;">isRejected() : boolean</pre>
+                <p><em>Is this transaction rejected?</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>whether or not the transaction is completed, but rejected</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -777,13 +834,14 @@
                 <h3 class="public ">isCancelled()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">isCancelled() : boolean</pre>
-                <p><em>Is the transaction cancelled by the user?</em></p>
+                <p><em>Is this transaction cancelled by the user?</em></p>
                 
 
                 
                 
                                     <h4>Returns</h4>
                     boolean
+                                            &mdash; <p>whether or not the transaction is completed, but cancelled by the user</p>
                                     				
                             </article>
         </div>
@@ -805,13 +863,14 @@
                 <h3 class="public ">isPending()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">isPending() : boolean</pre>
-                <p><em>Is the response successful?</em></p>
+                <p><em>Is this transaction still pending?</em></p>
                 
 
                 
                 
                                     <h4>Returns</h4>
                     boolean
+                                            &mdash; <p>whether or not the transaction is not completed and still pending</p>
                                     				
                             </article>
         </div>
@@ -832,21 +891,24 @@
             <article class="method">
                 <h3 class="protected ">getDate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getDate(  <span class="argument">$dateString</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getDate(string  <span class="argument">$dateString</span>) : \Carbon\Carbon</pre>
+                <p><em>parse a date string from the format used in the gateway to a Carbon instance</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$dateString </td>
-                                <td></td>
+                                <td><p>a datetime string in the format used by the gateway</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    \Carbon\Carbon
+                                            &mdash; <p>date instance</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -866,8 +928,8 @@
             <article class="method">
                 <h3 class="protected ">translateRejectionCodeToMessage()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">translateRejectionCodeToMessage(  <span class="argument">$code</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">translateRejectionCodeToMessage(  <span class="argument">$code</span>) : string</pre>
+                <p><em>translate a rejection code to a human readable string</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -879,8 +941,16 @@
                             </tr>
                                             </table>
                 
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\InvalidArgumentException</dt>
+                            <dd><p>if the $code is not found in $possibleRejectionErrorCodes</p></dd>
+                                                                    </dl>
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>human readable rejection string</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -944,7 +1014,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on December 3rd, 2016 at 19:03.
+                    on December 3rd, 2016 at 19:44.
                 </section>
             </section>
         </section>
