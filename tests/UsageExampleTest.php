@@ -73,12 +73,11 @@ class UsageExampleTest extends TestCase{
 
         $gateway->setShopId("0199123456");
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId('myGeneratedTransactionId');
         $gateway->setTestMode(false);
 
         try {
             $response = $gateway->completePurchase([
-                'transactionId' => $gateway->getTransactionId(),
+                'transactionId' => 'myGeneratedTransactionId',
             ])->send();
 
             if ($response->isSuccessful()){

@@ -63,12 +63,11 @@ $gateway = Omnipay\Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
 
 $gateway->setShopId("0199123456");
 $gateway->setPrivateKey(file_get_contents('myShopKey.privKey.pem'));
-$gateway->setTransactionId('myGeneratedTransactionId');
 $gateway->setTestMode(false);
 
 try {
     $response = $gateway->completePurchase([
-        'transactionId' => $gateway->getTransactionId(),
+        'transactionId' => 'myGeneratedTransactionId',
     ])->send();
 
     if ($response->isSuccessful()){

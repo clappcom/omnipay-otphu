@@ -21,10 +21,9 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
 
         $response = $gateway->completePurchase([
-            'transactionId' => $gateway->getTransactionId(),
+            'transactionId' => 'myTransactionId',
         ])->send();
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isPending());
@@ -48,10 +47,9 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
 
         $response = $gateway->completePurchase([
-            'transactionId' => $gateway->getTransactionId(),
+            'transactionId' => 'myTransactionId',
         ])->send();
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isPending());
@@ -75,11 +73,10 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
 
 
         $response = $gateway->completePurchase([
-            'transactionId' => $gateway->getTransactionId(),
+            'transactionId' => 'myTransactionId',
         ])->send();
 
         $this->assertFalse($response->isSuccessful());
@@ -104,10 +101,9 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
 
         $response = $gateway->completePurchase([
-            'transactionId' => $gateway->getTransactionId(),
+            'transactionId' => 'myTransactionId',
         ])->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -132,10 +128,9 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId(str_replace('-','',$this->faker->uuid));
 
         $response = $gateway->transactionDetails([
-            'transactionId' => $gateway->getTransactionId(),
+            'transactionId' => 'myTransactionId',
         ])->send();
 
         $this->assertTrue($response->isSuccessful());
