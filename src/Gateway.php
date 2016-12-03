@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Contains Clapp\OtpHu\Gateway
+ */
 namespace Clapp\OtpHu;
 
 use Omnipay\Common\AbstractGateway;
@@ -12,23 +14,58 @@ use InvalidArgumentException;
 use Guzzle\Http\ClientInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
-
+/**
+ * Allows your users to use otpbank.hu's online payment gateway.
+ */
 class Gateway extends AbstractGateway{
-
+    /**
+     * the API endpoint used for communicating with the gateway
+     * @var string
+     */
     protected $endpoint = "https://www.otpbankdirekt.hu/mwaccesspublic/mwaccess";
-
+    /**
+     * the factory used to auto generate transactions IDs
+     * @var TransactionIdFactory|null
+     */
     protected $transactionIdFactory = null;
-
+    /**
+     * Create a new gateway instance
+     *
+     * @param ClientInterface $httpClient  A Guzzle client to make API calls with
+     * @param HttpRequest     $httpRequest A Symfony HTTP request object
+     */
     public function __construct(ClientInterface $httpClient = null, HttpRequest $httpRequest = null){
         parent::__construct($httpClient, $httpRequest);
 
         $this->setParameter('endpoint', $this->endpoint);
     }
-
+    /**
+     * @internal
+     * @return string
+     */
     public function getName(){
         return "otphu";
     }
-
+    /**
+     * Start a new transaction on the gateway
+     *
+     * Possible fields for $options are:
+     *
+     * - `currency` string 3 letter currency code, e.g. `HUF`
+     * - `amount` int|float|string amount of currency to charge (in any format accepted by `number_format()`)
+     *
+     * Example:
+     *
+     * ```php
+     * $gateway->purchase([
+     *     'amount' => 100,
+     *     'currency' => 'HUF'
+     * ]);
+     * ```
+     *
+     * @param  array $options payment options
+     * @return PaymentRequest the payment request that is ready to be sent to the gateway
+     */
     public function purchase($options){
         $transactionId = $this->getTransactionId($options);
          if (!empty($transactionId)){
@@ -41,7 +78,7 @@ class Gateway extends AbstractGateway{
             'shop_id',
             'private_key',
             'endpoint',
-            'customer_return_url'
+            'returnUrl'
         );
         /**
          * generáltassunk az OTP-vel transactionId-t, ha nem lenne nekünk
@@ -60,7 +97,7 @@ class Gateway extends AbstractGateway{
             'private_key',
             'endpoint',
             'transactionId',
-            'customer_return_url'
+            'returnUrl'
         );
 
         return $request;
@@ -102,6 +139,26 @@ class Gateway extends AbstractGateway{
     }
     public function getTransactionIdFactory(){
         return $this->transactionIdFactory;
+    }
+    /**
+     * Get the request return URL.
+     *
+     * @return string
+     */
+    public function getReturnUrl()
+    {
+        return $this->getParameter('returnUrl');
+    }
+
+    /**
+     * Sets the request return URL.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setReturnUrl($value)
+    {
+        return $this->setParameter('returnUrl', $value);
     }
 
     public function setShopId($value){
