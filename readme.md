@@ -1,4 +1,4 @@
-clapp/omnipay-otphu [![Build Status](https://travis-ci.org/dsge/omnipay-otphu.svg?branch=master)](https://travis-ci.org/dsge/omnipay-otphu) [![Coverage Status](https://coveralls.io/repos/github/dsge/omnipay-otphu/badge.svg?branch=master)](https://coveralls.io/github/dsge/omnipay-otphu?branch=master)
+clapp/omnipay-otphu [![Build Status](https://travis-ci.org/clappcom/omnipay-otphu.svg?branch=master)](https://travis-ci.org/clappcom/omnipay-otphu) [![Coverage Status](https://coveralls.io/repos/github/clappcom/omnipay-otphu/badge.svg)](https://coveralls.io/github/clappcom/omnipay-otphu)
 ===
 
 Experimental package, not recommended for production.
@@ -10,7 +10,7 @@ Install
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/dsge/omnipay-otphu.git"
+        "url": "https://github.com/clappcom/omnipay-otphu.git"
     }
 ],
 ```
@@ -103,4 +103,4 @@ try {
 Documentation
 ---
 
-In the `/docs` folder or [on Github Pages](https://dsge.github.io/omnipay-otphu/namespaces/Clapp.OtpHu.html).
+In the `/docs` folder or [on Github Pages](https://clappcom.github.io/omnipay-otphu/namespaces/Clapp.OtpHu.html).
