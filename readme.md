@@ -5,15 +5,6 @@ Experimental package, not recommended for production.
 
 Install
 ---
-`composer.json`:
-```javascript
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/clappcom/omnipay-otphu.git"
-    }
-],
-```
 
 ```
 composer require clapp/omnipay-otphu:dev-master
