@@ -1,5 +1,25 @@
 {
     "name": "clapp/omnipay-otphu",
+    "description": "Experimental Omnipay v2.5 Payment Gateway for https://www.otpbank.hu",
+    "keywords": [
+        "otp",
+        "otpbank",
+        "omnipay",
+        "payment",
+        "hungary",
+        "pay",
+        "merchant",
+        "purchase",
+        "magyar"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gergely Sárosi",
+            "email": "gergely.sarosi@clapp.eu",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "omnipay/common": "^2.5.1",
         "php": "^5.5.9 | ~7.0",
