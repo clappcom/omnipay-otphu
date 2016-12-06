@@ -13,6 +13,8 @@ use SimpleXMLElement;
 use InvalidArgumentException;
 use Guzzle\Http\ClientInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Clapp\OtpHu\Contract\TransactionIdFactoryContract;
+
 
 /**
  * Allows your users to use otpbank.hu's online payment gateway.
@@ -88,8 +90,7 @@ class Gateway extends AbstractGateway{
             if (empty($this->transactionIdFactory)){
                 throw new InvalidArgumentException('missing factory for auto generating transaction_id');
             }
-            $response = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
-            $transactionId = $response->getTransactionId();
+            $transactionId = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
         }
         $this->setTransactionId($transactionId);
 
@@ -162,7 +163,7 @@ class Gateway extends AbstractGateway{
      * set the transcationFactory that will be used to generate transaction IDs if none is provided for purchase()
      * @param TransactionIdFactory $factory the new TransactionIdFactory instance
      */
-    public function setTransactionIdFactory(TransactionIdFactory $factory){
+    public function setTransactionIdFactory(TransactionIdFactoryContract $factory){
         $this->transactionIdFactory = $factory;
         return $this;
     }

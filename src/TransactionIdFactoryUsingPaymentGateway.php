@@ -2,13 +2,14 @@
 
 namespace Clapp\OtpHu;
 
+use Clapp\OtpHu\Contract\TransactionIdFactoryContract;
 use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
 
-class TransactionIdFactory extends Gateway{
+class TransactionIdFactoryUsingPaymentGateway extends Gateway implements TransactionIdFactoryContract{
 
-    public function generateTransactionId($parameters){
+    public function generateTransactionId($parameters = []){
         $request = $this->getGenerateTransactionIdRequest($parameters);
-        return $request->send();
+        return $request->send()->getTransactionId();
     }
 
     protected function getGenerateTransactionIdRequest($parameters){

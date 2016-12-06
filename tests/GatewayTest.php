@@ -2,7 +2,7 @@
 
 use Clapp\OtpHu\Gateway as OtpHuGateway;
 use Omnipay\Common\AbstractGateway;
-use Clapp\OtpHu\TransactionIdFactory;
+use Clapp\OtpHu\TransactionIdFactoryUsingPaymentGateway;
 use Omnipay\Omnipay;
 use Omnipay\Common\CreditCard;
 use Illuminate\Validaton\ValidationException;
@@ -10,6 +10,7 @@ use Omnipay\Common\Exception\InvalidRequestException;
 use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Guzzle\Http\Client as HttpClient;
+use Clapp\OtpHu\Contract\TransactionIdFactoryContract;
 
 class GatewayTest extends TestCase{
     public function testGatewayCreation(){
@@ -102,7 +103,7 @@ class GatewayTest extends TestCase{
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setReturnUrl("https://www.example.com/processing-your-payment");
 
-        $mock = $this->getMockBuilder(TransactionIdFactory::class)
+        $mock = $this->getMockBuilder(TransactionIdFactoryContract::class)
             ->setMethods([
                 'generateTransactionId',
             ])
@@ -126,6 +127,6 @@ class GatewayTest extends TestCase{
         }
         $this->assertLastException(InvalidRequestException::class);
 
-        $this->assertTrue($gateway->getTransactionIdFactory() instanceof TransactionIdFactory);
+        $this->assertTrue($gateway->getTransactionIdFactory() instanceof TransactionIdFactoryContract);
     }
 }

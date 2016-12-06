@@ -1,19 +1,19 @@
 <?php
 
-use Clapp\OtpHu\TransactionIdFactory;
+use Clapp\OtpHu\TransactionIdFactoryUsingPaymentGateway;
 
 use Guzzle\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 
-class TransactionIdFactoryTest extends TestCase{
+class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase{
     /**
      * @expectedException Omnipay\Common\Exception\InvalidRequestException
      */
     public function testTransactionIdGenerationMissingParameters(){
 
-        $transactionIdFactory = new TransactionIdFactory();
+        $transactionIdFactory = new TransactionIdFactoryUsingPaymentGateway();
 
         $response = $transactionIdFactory->generateTransactionId([
 
@@ -28,7 +28,7 @@ class TransactionIdFactoryTest extends TestCase{
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $transactionIdFactory = new TransactionIdFactory($client);
+        $transactionIdFactory = new TransactionIdFactoryUsingPaymentGateway($client);
 
         $response = $transactionIdFactory->generateTransactionId([
             'shop_id' => $this->faker->randomNumber,
@@ -42,14 +42,14 @@ class TransactionIdFactoryTest extends TestCase{
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $transactionIdFactory = new TransactionIdFactory($client);
+        $transactionIdFactory = new TransactionIdFactoryUsingPaymentGateway($client);
 
         $response = $transactionIdFactory->generateTransactionId([
             'shop_id' => $this->faker->randomNumber,
             'private_key' => $this->getDummyRsaPrivateKey(),
         ]);
 
-        $this->assertTrue($response->isSuccessful());
-        $this->assertNotEmpty($response->getTransactionId());
+        $this->assertNotEmpty($response);
+        $this->assertTrue(is_string($response));
     }
 }
