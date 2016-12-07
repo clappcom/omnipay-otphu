@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Factory as Faker;
+use LSS\Array2XML;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase{
 
@@ -27,9 +28,28 @@ abstract class TestCase extends PHPUnit_Framework_TestCase{
         }
         $this->lastException = null;
     }
+    /**
+     *
+ <env:Header></env:Header>
+ <env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+     <m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access">
+         <return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState">
+             <completed xsi:type="xsd:boolean">true</completed>
+             <endTime xsi:type="xsd:string">2016.11.15. 19:53:43</endTime>
+             <instanceId xsi:type="xsd:string">8YuEEWnJyo7x5169189134</instanceId>
+             <result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz48YW5zd2VyPjxyZXN1bHRzZXQ+PHJlY29yZD48cG9zaWQ+NzQxNzk8L3Bvc2lkPjx0cmFuc2FjdGlvbmlkPjU8L3RyYW5zYWN0aW9uaWQ+PC9yZWNvcmQ+PC9yZXN1bHRzZXQ+PG1lc3NhZ2VsaXN0PjxtZXNzYWdlPkhJQU5ZWklLU0hPUFBVQkxJS1VTS1VMQ1M8L21lc3NhZ2U+PC9tZXNzYWdlbGlzdD48L2Fuc3dlcj4=</result>
+             <startTime xsi:type="xsd:string">2016.11.15. 19:53:43</startTime>
+             <templateName xsi:type="xsd:string">WEBSHOPFIZETESINDITAS</templateName>
+             <timeout xsi:type="xsd:boolean">false</timeout>
+         </return>
+     </m:startWorkflowSynchResponse>
+ </env:Body>
+     */
+
+
 
     public static $unknownShopIdResponseBody = '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><env:Header></env:Header><env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access"><return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState"><completed xsi:type="xsd:boolean">true</completed><endTime xsi:type="xsd:string">2016.11.15. 19:53:43</endTime><instanceId xsi:type="xsd:string">8YuEEWnJyo7x5169189134</instanceId><result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz48YW5zd2VyPjxyZXN1bHRzZXQ+PHJlY29yZD48cG9zaWQ+NzQxNzk8L3Bvc2lkPjx0cmFuc2FjdGlvbmlkPjU8L3RyYW5zYWN0aW9uaWQ+PC9yZWNvcmQ+PC9yZXN1bHRzZXQ+PG1lc3NhZ2VsaXN0PjxtZXNzYWdlPkhJQU5ZWklLU0hPUFBVQkxJS1VTS1VMQ1M8L21lc3NhZ2U+PC9tZXNzYWdlbGlzdD48L2Fuc3dlcj4=</result><startTime xsi:type="xsd:string">2016.11.15. 19:53:43</startTime><templateName xsi:type="xsd:string">WEBSHOPFIZETESINDITAS</templateName><timeout xsi:type="xsd:boolean">false</timeout></return></m:startWorkflowSynchResponse></env:Body></env:Envelope>';
-    public static $successfulPurchaseResponseBody = '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><env:Header></env:Header><env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access"><return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState"><completed xsi:type="xsd:boolean">true</completed><endTime xsi:type="xsd:string">2016.11.15. 22:11:07</endTime><instanceId xsi:type="xsd:string">dIsgwSLRmGOx5169691306</instanceId><result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz48YW5zd2VyPjxyZXN1bHRzZXQ+PHJlY29yZD48cG9zaWQ+IzAyMjk5OTkxPC9wb3NpZD48dHJhbnNhY3Rpb25pZD4xN2RiOGZjNTRhMzczM2M0ODk4YTY3ZTBkYmJkODk5NjwvdHJhbnNhY3Rpb25pZD48L3JlY29yZD48L3Jlc3VsdHNldD48bWVzc2FnZWxpc3Q+PG1lc3NhZ2U+U0lLRVJFU1dFQlNIT1BGSVpFVEVTSU5ESVRBUzwvbWVzc2FnZT48L21lc3NhZ2VsaXN0PjwvYW5zd2VyPg==</result><startTime xsi:type="xsd:string">2016.11.15. 22:11:07</startTime><templateName xsi:type="xsd:string">WEBSHOPFIZETESINDITAS</templateName><timeout xsi:type="xsd:boolean">false</timeout></return></m:startWorkflowSynchResponse></env:Body></env:Envelope>';
+    public static $successfulPurchaseResponseBody = '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><env:Header></env:Header><env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access"><return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState"><completed xsi:type="xsd:boolean">true</completed><endTime xsi:type="xsd:string">2016.11.15. 19:53:43</endTime><instanceId xsi:type="xsd:string">8YuEEWnJyo7x5169189134</instanceId><result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz48YW5zd2VyPjxyZXN1bHRzZXQ+PHJlY29yZD48cG9zaWQ+IzAyMjk5OTkxPC9wb3NpZD48dHJhbnNhY3Rpb25pZD4xN2RiOGZjNTRhMzczM2M0ODk4YTY3ZTBkYmJkODk5NjwvdHJhbnNhY3Rpb25pZD48L3JlY29yZD48L3Jlc3VsdHNldD48bWVzc2FnZWxpc3Q+PG1lc3NhZ2U+U0lLRVJFU1dFQlNIT1BGSVpFVEVTSU5ESVRBUzwvbWVzc2FnZT48L21lc3NhZ2VsaXN0PjwvYW5zd2VyPg==</result><startTime xsi:type="xsd:string">2016.11.15. 19:53:43</startTime><templateName xsi:type="xsd:string">WEBSHOPFIZETESINDITAS</templateName><timeout xsi:type="xsd:boolean">false</timeout></return></m:startWorkflowSynchResponse></env:Body></env:Envelope>';
     public static $invalidStatusCodeSuccessfulPurchaseResponseBody = '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><env:Header></env:Header><env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access"><return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState"><completed xsi:type="xsd:boolean">true</completed><endTime xsi:type="xsd:string">2016.11.15. 22:11:07</endTime><instanceId xsi:type="xsd:string">dIsgwSLRmGOx5169691306</instanceId><result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz48YW5zd2VyPjxyZXN1bHRzZXQ+PHJlY29yZD48cG9zaWQ+IzAyMjk5OTkxPC9wb3NpZD48dHJhbnNhY3Rpb25pZD4xN2RiOGZjNTRhMzczM2M0ODk4YTY3ZTBkYmJkODk5NjwvdHJhbnNhY3Rpb25pZD48L3JlY29yZD48L3Jlc3VsdHNldD48bWVzc2FnZWxpc3Q+PG1lc3NhZ2U+bG9yZW1pcHN1bTwvbWVzc2FnZT48L21lc3NhZ2VsaXN0PjwvYW5zd2VyPg==</result><startTime xsi:type="xsd:string">2016.11.15. 22:11:07</startTime><templateName xsi:type="xsd:string">WEBSHOPFIZETESINDITAS</templateName><timeout xsi:type="xsd:boolean">false</timeout></return></m:startWorkflowSynchResponse></env:Body></env:Envelope>';
     public static $successfulTransactionIdGenerationResponseBody = '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><env:Header></env:Header><env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access"><return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState"><completed xsi:type="xsd:boolean">true</completed><endTime xsi:type="xsd:string">2016.11.16. 23:19:52</endTime><instanceId xsi:type="xsd:string">5v6LHfZa0Oox5175304950</instanceId><result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPGFuc3dlcj48cmVzdWx0c2V0PjxyZWNvcmQ+PHBvc2lkPiMwMjI5OTk5MTwvcG9zaWQ+PGlkPjk0MTU4MDY5Mjg5OTkwNDEwNzgyNzU0MjA3Njg5OTEyPC9pZD48dGltZXN0YW1wPjIwMTYuMTEuMTYgMjMuMTkuNTIgNjk1PC90aW1lc3RhbXA+PC9yZWNvcmQ+PC9yZXN1bHRzZXQ+PG1lc3NhZ2VsaXN0PjxtZXNzYWdlPlNJS0VSPC9tZXNzYWdlPjwvbWVzc2FnZWxpc3Q+PGluZm9saXN0Lz48L2Fuc3dlcj4=</result><startTime xsi:type="xsd:string">2016.11.16. 23:19:52</startTime><templateName xsi:type="xsd:string">WEBSHOPTRANZAZONGENERALAS</templateName><timeout xsi:type="xsd:boolean">false</timeout></return></m:startWorkflowSynchResponse></env:Body></env:Envelope>';
     public static $invalidClientSignatureResponseBody = '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><env:Header></env:Header><env:Body env:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><m:startWorkflowSynchResponse xmlns:m="java:hu.iqsoft.otp.mw.access"><return xmlns:n1="java:hu.iqsoft.otp.mw.access" xsi:type="n1:WorkflowState"><completed xsi:type="xsd:boolean">true</completed><endTime xsi:type="xsd:string">2016.11.16. 22:52:10</endTime><instanceId xsi:type="xsd:string">umpwSabQy0Qx5175259813</instanceId><result xsi:type="xsd:base64Binary">PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz48YW5zd2VyPjxyZXN1bHRzZXQ+PC9yZXN1bHRzZXQ+PG1lc3NhZ2VsaXN0PjxtZXNzYWdlPkhJQkFTS0xJRU5TQUxBSVJBUzwvbWVzc2FnZT48L21lc3NhZ2VsaXN0PjwvYW5zd2VyPg==</result><startTime xsi:type="xsd:string">2016.11.16. 22:52:10</startTime><templateName xsi:type="xsd:string">WEBSHOPTRANZAKCIOLEKERDEZES</templateName><timeout xsi:type="xsd:boolean">false</timeout></return></m:startWorkflowSynchResponse></env:Body></env:Envelope>';
@@ -56,6 +76,94 @@ kGFHGU89zDJB5CMZAkAD6gCd9i74NNmXjp6w1xl/4ngIYpZsAG5oqQu4a15h03yX
 UPNeFSinFvysmiUWiVCSIO1GjSHctPrr4Sx8lJTG
 -----END RSA PRIVATE KEY-----
 ";
+    }
+    /**
+     * Generate a full response body text (xml envelope + payload) to mock gateway responses
+     */
+    public function generateResponseBody($payload = []){
+        Array2XML::init('1.0', 'UTF-8', false);
+        $payload = base64_encode(
+            str_replace(
+                ['"', "\n", "UTF-8"],
+                ["'", '',   "utf-8"],
+                Array2XML::createXML('answer', $payload)->saveXML()
+            )
+        );
+
+        Array2XML::init('1.0', 'UTF-8', false);
+        $dom = Array2XML::createXML('env:Envelope',
+            [
+            '@attributes' => [
+                'xmlns:env' => 'http://schemas.xmlsoap.org/soap/envelope/',
+                'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+                'xmlns:soapenc' => 'http://schemas.xmlsoap.org/soap/encoding/',
+                'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
+            ],
+            'env:Header' => [''],
+            'env:Body' => [
+                '@attributes' => [
+                    'env:encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/',
+                ],
+                'm:startWorkflowSynchResponse' => [
+                    '@attributes' => [
+                        'xmlns:m' => 'java:hu.iqsoft.otp.mw.access',
+                    ],
+                    'return' => [
+                        '@attributes' => [
+                            'xmlns:n1' => 'java:hu.iqsoft.otp.mw.access',
+                            'xsi:type' => 'n1:WorkflowState',
+                        ],
+                        'completed' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:boolean'
+                            ],
+                            '@value' => 'true',
+                        ],
+                        'endTime' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:string'
+                            ],
+                            '@value' => '2016.11.15. 19:53:43',
+                        ],
+                        'instanceId' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:string'
+                            ],
+                            '@value' => '8YuEEWnJyo7x5169189134',
+                        ],
+                        'result' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:base64Binary'
+                            ],
+                            '@value' => $payload,
+                        ],
+                        'startTime' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:string'
+                            ],
+                            '@value' => '2016.11.15. 19:53:43',
+                        ],
+                        'templateName' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:string'
+                            ],
+                            '@value' => 'WEBSHOPFIZETESINDITAS',
+                        ],
+                        'timeout' => [
+                            '@attributes' => [
+                                'xsi:type' => 'xsd:boolean'
+                            ],
+                            '@value' => 'false',
+                        ],
+                    ]
+                ]
+            ]
+        ]);
+        $xml = $dom->saveXML();
+
+        $xml = str_replace(['<?xml version="1.0" encoding="UTF-8"?>',"\n"],'',$xml);
+
+        return $xml;
     }
 
 }
