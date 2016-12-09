@@ -15,13 +15,14 @@ class GenerateTransactionIdResponse extends AbstractResponse{
         parent::__construct($request, $data);
 
         try {
-
             $payload = base64_decode((new SimpleXMLElement($data))->xpath('//result')[0]->__toString());
             $transactionIdElement = (new SimpleXMLElement($payload))->xpath('//id');
             if (empty($transactionIdElement)){
-                throw new Exception('missing transaction id from response');
+                throw new BadResponseException('missing transaction id from response');
             }
             $this->transactionId = $transactionIdElement[0]->__toString();
+        }catch(BadResponseException $e){
+            throw $e;
         }catch(Exception $e){
             throw new BadResponseException($data);
         }

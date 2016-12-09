@@ -44,6 +44,13 @@ class GatewayTest extends TestCase{
 
         $this->assertEquals($privateKey, $gateway->getPrivateKey());
     }
+    public function testReturnUrlGetter(){
+        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+        $returnUrl = "https://www.example.com/processing-your-payment";
+        $gateway->setReturnUrl($returnUrl);
+
+        $this->assertEquals($returnUrl, $gateway->getReturnUrl());
+    }
 
     public function testMissingTransactionIdFactory(){
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
