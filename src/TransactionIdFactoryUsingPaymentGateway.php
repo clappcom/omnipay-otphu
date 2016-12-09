@@ -7,9 +7,12 @@ use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
 
 class TransactionIdFactoryUsingPaymentGateway extends Gateway implements TransactionIdFactoryContract{
 
+    public $lastResponse = null;
+
     public function generateTransactionId($parameters = []){
-        $request = $this->getGenerateTransactionIdRequest($parameters);
-        return $request->send()->getTransactionId();
+        $response = $this->getGenerateTransactionIdRequest($parameters)->send();
+        $this->lastResponse = $response;
+        return $response->getTransactionId();
     }
 
     protected function getGenerateTransactionIdRequest($parameters){

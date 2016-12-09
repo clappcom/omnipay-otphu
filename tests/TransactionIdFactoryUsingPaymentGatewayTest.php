@@ -77,6 +77,8 @@ class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase{
             'private_key' => $this->getDummyRsaPrivateKey(),
         ]);
 
+        $this->assertTrue($transactionIdFactory->lastResponse->isSuccessful());
+
         $this->assertNotEmpty($response);
         $this->assertTrue(is_string($response));
     }
