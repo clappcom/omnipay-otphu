@@ -77,10 +77,17 @@ UPNeFSinFvysmiUWiVCSIO1GjSHctPrr4Sx8lJTG
 -----END RSA PRIVATE KEY-----
 ";
     }
+    protected function array_get($array = [], $fieldName = "", $default = null){
+        if (!empty($fieldName) && is_array($array) && isset($array[$fieldName])){
+            return $array[$fieldName];
+        }else {
+            return $default;
+        }
+    }
     /**
      * Generate a full response body text (xml envelope + payload) to mock gateway responses
      */
-    public function generateResponseBody($payload = []){
+    public function generateResponseBody($payload = [], $meta = []){
         Array2XML::init('1.0', 'UTF-8', false);
         $payload = base64_encode(
             str_replace(
@@ -117,13 +124,13 @@ UPNeFSinFvysmiUWiVCSIO1GjSHctPrr4Sx8lJTG
                             '@attributes' => [
                                 'xsi:type' => 'xsd:boolean'
                             ],
-                            '@value' => 'true',
+                            '@value' => $this->array_get($meta, "completed", 'true'),
                         ],
                         'endTime' => [
                             '@attributes' => [
                                 'xsi:type' => 'xsd:string'
                             ],
-                            '@value' => '2016.11.15. 19:53:43',
+                            '@value' => $this->array_get($meta, "endTime", '2016.11.15. 19:53:43'),
                         ],
                         'instanceId' => [
                             '@attributes' => [
@@ -141,19 +148,19 @@ UPNeFSinFvysmiUWiVCSIO1GjSHctPrr4Sx8lJTG
                             '@attributes' => [
                                 'xsi:type' => 'xsd:string'
                             ],
-                            '@value' => '2016.11.15. 19:53:43',
+                            '@value' => $this->array_get($meta, "startTime", '2016.11.15. 19:53:43'),
                         ],
                         'templateName' => [
                             '@attributes' => [
                                 'xsi:type' => 'xsd:string'
                             ],
-                            '@value' => 'WEBSHOPFIZETESINDITAS',
+                            '@value' => $this->array_get($meta, "templateName", 'WEBSHOPFIZETESINDITAS'),
                         ],
                         'timeout' => [
                             '@attributes' => [
                                 'xsi:type' => 'xsd:boolean'
                             ],
-                            '@value' => 'false',
+                            '@value' => $this->array_get($meta, "timeout", 'false'),
                         ],
                     ]
                 ]
