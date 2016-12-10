@@ -84,15 +84,16 @@ class Gateway extends AbstractGateway{
             'returnUrl'
         );
         /**
-         * generáltassunk az OTP-vel transactionId-t, ha nem lenne nekünk
+         * if we did not provide a transactionID then generate one using the gateway
          */
         if (empty($transactionId)){
             if (empty($this->transactionIdFactory)){
-                throw new InvalidArgumentException('missing factory for auto generating transaction_id');
+                $this->transactionIdFactory = $this->getDefaultTransactionIdFactory();
             }
             $transactionId = $this->transactionIdFactory->generateTransactionId(array_merge($options, $this->getParameters()));
         }
         $this->setTransactionId($transactionId);
+        $request->setTransactionId($transactionId);
 
         $request->validate(
             'shop_id',
@@ -103,6 +104,14 @@ class Gateway extends AbstractGateway{
         );
 
         return $request;
+    }
+    /**
+     * create the default TransactionIdFactory
+     *
+     * @return TransactionIdFactoryContract default TransactionIdFactory
+     */
+    protected function getDefaultTransactionIdFactory(){
+        return new TransactionIdFactoryUsingPaymentGateway($this->httpClient);
     }
     /**
      * Get the details of a transaction from the gateway, including whether or not it's already completed.
