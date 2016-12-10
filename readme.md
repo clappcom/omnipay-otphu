@@ -20,7 +20,7 @@ include 'vendor/autoload.php';
 $gateway = Omnipay\Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
 
 $gateway->setShopId("0199123456");
-$gateway->setPrivateKey($this->getDummyRsaPrivateKey());
+$gateway->setPrivateKey(file_get_contents('myShopKey.privKey.pem'));
 $gateway->setTestMode(false);
 
 try {
