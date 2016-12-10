@@ -20,14 +20,14 @@ include 'vendor/autoload.php';
 $gateway = Omnipay\Omnipay::create("\\".Clapp\OtpHu\Gateway::class);
 
 $gateway->setShopId("0199123456");
-$gateway->setPrivateKey(file_get_contents('myShopKey.privKey.pem'));
-$gateway->setReturnUrl("https://www.example.com/processing-your-payment");
+$gateway->setPrivateKey($this->getDummyRsaPrivateKey());
 $gateway->setTestMode(false);
 
 try {
     $request = $gateway->purchase([
         'amount' => '100.00',
-        'currency' => 'HUF'
+        'currency' => 'HUF',
+        'returnUrl' => 'https://www.example.com/processing-your-payment',
     ]);
     $response = $request->send();
 

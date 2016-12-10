@@ -26,13 +26,13 @@ class UsageExampleTest extends TestCase{
 
         $gateway->setShopId("0199123456");
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
         try {
             $request = $gateway->purchase([
                 'amount' => '100.00',
-                'currency' => 'HUF'
+                'currency' => 'HUF',
+                'returnUrl' => 'https://www.example.com/processing-your-payment',
             ]);
             $response = $request->send();
 
