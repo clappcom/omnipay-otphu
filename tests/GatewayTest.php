@@ -11,6 +11,8 @@ use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Guzzle\Http\Client as HttpClient;
 use Clapp\OtpHu\Contract\TransactionIdFactoryContract;
+use Guzzle\Plugin\Mock\MockPlugin;
+use Guzzle\Http\Message\Response;
 
 class GatewayTest extends TestCase{
     public function testGatewayCreation(){
@@ -52,20 +54,6 @@ class GatewayTest extends TestCase{
         $this->assertEquals($returnUrl, $gateway->getReturnUrl());
     }
 
-    public function testMissingTransactionIdFactory(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
-        $gateway->setShopId($this->faker->randomNumber);
-        $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setReturnUrl("https://www.example.com/processing-your-payment");
-
-        try {
-            $gateway->purchase([]);
-        }catch(InvalidArgumentException $e){
-            $this->setLastException($e);
-        }
-        $this->assertLastException(InvalidArgumentException::class);
-    }
-
     public function testTransactionIdWithoutFactory(){
         $gateway = Omnipay::create("\\".OtpHuGateway::class);
 
@@ -105,7 +93,12 @@ class GatewayTest extends TestCase{
     }
 
     public function testTransactionIdWithFactory(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+        $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(200, null, self::$successfulTransactionIdGenerationResponseBody));
+        $client = new HttpClient();
+        $client->addSubscriber($plugin);
+
+        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
         $gateway->setReturnUrl("https://www.example.com/processing-your-payment");
@@ -116,23 +109,19 @@ class GatewayTest extends TestCase{
             ])
             ->getMock();
 
-        $mockResponse = $this->getMockBuilder(GenerateTransactionIdRequest::class)
-            ->setConstructorArgs([new HttpClient(), new HttpRequest()])
-            ->getMock();
-
         $generatedTransactionId = $this->faker->creditCardNumber;
 
         $mock->expects($this->once())
             ->method('generateTransactionId')
-            ->will($this->returnValue($mockResponse));
+            ->will($this->returnValue($generatedTransactionId));
 
         $gateway->setTransactionIdFactory($mock);
-        try{
-            $gateway->purchase([]);
-        }catch(InvalidRequestException $e){
-            $this->setLastException($e);
-        }
-        $this->assertLastException(InvalidRequestException::class);
+
+        $gateway->purchase([]);
+
+        $this->assertNotEmpty($gateway->getTransactionId());
+        $this->assertTrue(is_string($gateway->getTransactionId()));
+        $this->assertEquals($generatedTransactionId, $gateway->getTransactionId());
 
         $this->assertTrue($gateway->getTransactionIdFactory() instanceof TransactionIdFactoryContract);
     }

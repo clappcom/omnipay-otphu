@@ -12,6 +12,7 @@ class UsageExampleTest extends TestCase{
          * mock
          */
         $plugin = new MockPlugin();
+        $plugin->addResponse(new Response(200, null, self::$successfulTransactionIdGenerationResponseBody));
         $plugin->addResponse(new Response(200, null, self::$successfulPurchaseResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
@@ -25,7 +26,6 @@ class UsageExampleTest extends TestCase{
 
         $gateway->setShopId("0199123456");
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setTransactionId('myGeneratedTransactionId');
         $gateway->setReturnUrl("https://www.example.com/processing-your-payment");
         $gateway->setTestMode(false);
 
