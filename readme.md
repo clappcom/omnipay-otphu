@@ -10,7 +10,7 @@ Install
 composer require clapp/omnipay-otphu:dev-master
 ```
 
-Usage
+Usage Example
 ---
 
 ```php
@@ -58,7 +58,7 @@ $gateway->setTestMode(false);
 
 try {
     $response = $gateway->completePurchase([
-        'transactionId' => 'myGeneratedTransactionId',
+        'transactionId' => 'myTransactionId',
     ])->send();
 
     if ($response->isSuccessful()){
