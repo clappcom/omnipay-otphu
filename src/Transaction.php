@@ -1,4 +1,7 @@
 <?php
+/**
+ * Contains Clapp\OtpHu\Transaction
+ */
 namespace Clapp\OtpHu;
 
 use SimpleXMLElement;
@@ -259,6 +262,7 @@ class Transaction{
     /**
      * translate a rejection code to a human readable string
      *
+     * @param  string $code rejection code from the gateway
      * @throws InvalidArgumentException if the $code is not found in $possibleRejectionErrorCodes
      * @return string human readable rejection string
      */

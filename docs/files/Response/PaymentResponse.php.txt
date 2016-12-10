@@ -1,4 +1,7 @@
 <?php
+/**
+ * Contains Clapp\OtpHu\Response\PaymentResponse
+ */
 namespace Clapp\OtpHu\Response;
 
 use Omnipay\Common\Message\AbstractResponse;
@@ -8,19 +11,30 @@ use SimpleXMLElement;
 use Clapp\OtpHu\BadResponseException;
 use Clapp\OtpHu\Response\UnknownShopIdResponse;
 use Exception;
-
+/**
+ * Represents a response for Gateway::purchase()->send()
+ */
 class PaymentResponse extends AbstractResponse implements RedirectResponseInterface{
     /**
      * https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId={0}&azonosito={1}&nyelvkod={2}
      */
     protected $redirectUrl = "https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas";
-
+    /**
+     * @var string status message returned by the gateway
+     */
     protected $messageString = null;
-
+    /**
+     * @var array list of `$messageString`s that are considered as a valid response
+     */
     public static $validMessageStrings = [
         "SIKERESWEBSHOPFIZETESINDITAS"
     ];
-
+    /**
+     * Constructor
+     *
+     * @param RequestInterface $request the initiating request.
+     * @param mixed $data
+     */
     public function __construct(RequestInterface $request, $data){
         parent::__construct($request, $data);
 
@@ -28,6 +42,14 @@ class PaymentResponse extends AbstractResponse implements RedirectResponseInterf
 
         $this->messageString = $this->parseResponseData($data);
     }
+    /**
+     * Parse the response as an xml string
+     *
+     * @param  string $data xml string returned by the gateway
+     * @throws UnknownShopIdResponse
+     * @throws BadResponseException
+     * @return string messageString from the gateway
+     */
     protected function parseResponseData ($data){
         try {
             /**

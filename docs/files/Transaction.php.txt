@@ -1,4 +1,7 @@
 <?php
+/**
+ * Contains Clapp\OtpHu\Transaction
+ */
 namespace Clapp\OtpHu;
 
 use SimpleXMLElement;
@@ -105,11 +108,7 @@ class Transaction{
      */
     public function setRawTransaction($rawTransaction = null){
         $this->rawTransaction = $rawTransaction;
-        try{
-            $this->formattedTransaction = json_decode(json_encode($rawTransaction));
-        }catch(Exception $e){
-            $this->formattedTransaction = null;
-        }
+        $this->formattedTransaction = json_decode(json_encode($rawTransaction));
     }
     /**
      * get the raw transaction details
@@ -263,6 +262,7 @@ class Transaction{
     /**
      * translate a rejection code to a human readable string
      *
+     * @param  string $code rejection code from the gateway
      * @throws InvalidArgumentException if the $code is not found in $possibleRejectionErrorCodes
      * @return string human readable rejection string
      */
