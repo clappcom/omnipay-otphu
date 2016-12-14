@@ -3,5 +3,6 @@
 composer.lock
 composer.phar
 /tests/logs/*
+phpunit.xml
 *.pem
 *.phar
