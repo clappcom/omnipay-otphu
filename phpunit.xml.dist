@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="SzamlazzhuClient test">
+        <testsuite name="omnipay-otphu test">
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
