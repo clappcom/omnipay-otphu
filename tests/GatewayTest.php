@@ -1,31 +1,29 @@
 <?php
 
-use Clapp\OtpHu\Gateway as OtpHuGateway;
-use Omnipay\Common\AbstractGateway;
-use Clapp\OtpHu\TransactionIdFactoryUsingPaymentGateway;
-use Omnipay\Omnipay;
-use Omnipay\Common\CreditCard;
-use Illuminate\Validaton\ValidationException;
-use Omnipay\Common\Exception\InvalidRequestException;
-use Clapp\OtpHu\Request\GenerateTransactionIdRequest;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
-use Guzzle\Http\Client as HttpClient;
 use Clapp\OtpHu\Contract\TransactionIdFactoryContract;
-use Guzzle\Plugin\Mock\MockPlugin;
+use Clapp\OtpHu\Gateway as OtpHuGateway;
+use Guzzle\Http\Client as HttpClient;
 use Guzzle\Http\Message\Response;
+use Guzzle\Plugin\Mock\MockPlugin;
+use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Omnipay;
 
-class GatewayTest extends TestCase{
-    public function testGatewayCreation(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+class GatewayTest extends TestCase
+{
+    public function testGatewayCreation()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
 
         $this->assertInstanceOf(OtpHuGateway::class, $gateway);
         $this->assertInstanceOf(AbstractGateway::class, $gateway);
 
-        $this->assertEquals("otphu", $gateway->getName());
+        $this->assertEquals('otphu', $gateway->getName());
     }
 
-    public function testTestMode(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+    public function testTestMode()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
 
         $shopId = $this->faker->randomNumber;
 
@@ -33,75 +31,83 @@ class GatewayTest extends TestCase{
         $this->assertEquals($gateway->getShopId($shopId), $shopId);
 
         $gateway->setTestMode(true);
-        $this->assertEquals($gateway->getShopId($shopId), "#".$shopId);
+        $this->assertEquals($gateway->getShopId($shopId), '#'.$shopId);
 
         $gateway->setTestMode(false);
         $this->assertEquals($gateway->getShopId($shopId), $shopId);
     }
 
-    public function testPrivateKeyGetter(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+    public function testPrivateKeyGetter()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
         $privateKey = $this->getDummyRsaPrivateKey();
         $gateway->setPrivateKey($privateKey);
 
         $this->assertEquals($privateKey, $gateway->getPrivateKey());
     }
-    public function testReturnUrlGetter(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
-        $returnUrl = "https://www.example.com/processing-your-payment";
+
+    public function testReturnUrlGetter()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
+        $returnUrl = 'https://www.example.com/processing-your-payment';
         $gateway->setReturnUrl($returnUrl);
 
         $this->assertEquals($returnUrl, $gateway->getReturnUrl());
     }
 
-    public function testTransactionIdWithoutFactory(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+    public function testTransactionIdWithoutFactory()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
 
-        try{
+        try {
             $gateway->purchase([
                 'transactionId' => $this->faker->creditCardNumber,
             ]);
-        }catch(InvalidRequestException $e){
+        } catch (InvalidRequestException $e) {
             $this->setLastException($e);
         }
         $this->assertLastException(InvalidRequestException::class);
     }
-    public function testTransactionIdWithoutFactoryOtherSyntax(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
 
-        try{
+    public function testTransactionIdWithoutFactoryOtherSyntax()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
+
+        try {
             $gateway->purchase([
                 'transaction_id' => $this->faker->creditCardNumber,
             ]);
-        }catch(InvalidRequestException $e){
+        } catch (InvalidRequestException $e) {
             $this->setLastException($e);
         }
         $this->assertLastException(InvalidRequestException::class);
     }
 
-    public function testTransactionIdWithoutFactoryOnGateway(){
-        $gateway = Omnipay::create("\\".OtpHuGateway::class);
+    public function testTransactionIdWithoutFactoryOnGateway()
+    {
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class);
 
         $gateway->setTransactionId($this->faker->creditCardNumber);
 
-        try{
+        try {
             $gateway->purchase([]);
-        }catch(InvalidRequestException $e){
+        } catch (InvalidRequestException $e) {
             $this->setLastException($e);
         }
         $this->assertLastException(InvalidRequestException::class);
     }
 
-    public function testTransactionIdWithFactory(){
+    public function testTransactionIdWithFactory()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$successfulTransactionIdGenerationResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-        $gateway->setReturnUrl("https://www.example.com/processing-your-payment");
+        $gateway->setReturnUrl('https://www.example.com/processing-your-payment');
 
         $mock = $this->getMockBuilder(TransactionIdFactoryContract::class)
             ->setMethods([
