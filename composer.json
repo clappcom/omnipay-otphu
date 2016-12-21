@@ -42,6 +42,7 @@
         ]
     },
     "scripts":{
-          "coverage": "./vendor/bin/phpunit  --coverage-clover ./tests/logs/clover.xml && php vendor/bin/coveralls -v --dry-run | grep %"
+        "test": "./vendor/bin/phpunit",
+        "coverage": "./vendor/bin/phpunit  --coverage-clover ./tests/logs/clover.xml && php vendor/bin/coveralls -v --dry-run | grep %"
     }
 }
