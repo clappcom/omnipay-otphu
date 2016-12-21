@@ -1,17 +1,17 @@
 <?php
+
 namespace Clapp\OtpHu\Request;
 
 use LSS\Array2XML;
 use Guzzle\Http\Message\Response as GuzzleResponse;
 use Clapp\OtpHu\Response\TransactionDetailsResponse;
 
-
-class TransactionDetailsRequest extends AbstractRequest{
-
+class TransactionDetailsRequest extends AbstractRequest
+{
     protected $actionName = 'WEBSHOPTRANZAKCIOLEKERDEZES';
 
-    public function getData(){
-
+    public function getData()
+    {
         $variablesData = [
             'isClientCode' => 'WEBSHOP', // ?
             'isPOSID' => $this->getShopId(),
@@ -23,7 +23,7 @@ class TransactionDetailsRequest extends AbstractRequest{
 
         $variables = [];
 
-        foreach($variablesData as $key => $value){
+        foreach ($variablesData as $key => $value) {
             $variables[$key] = [
                 '@value' => $value,
             ];
@@ -31,9 +31,9 @@ class TransactionDetailsRequest extends AbstractRequest{
 
         $variables['isClientSignature'] = [
            '@attributes' => [
-                "algorithm" => "SHA512"
+                'algorithm' => 'SHA512',
             ],
-            '@value' => $this->generateSignature()
+            '@value' => $this->generateSignature(),
         ];
 
         $signedActionBody = Array2XML::createXML('StartWorkflow',
@@ -44,33 +44,32 @@ class TransactionDetailsRequest extends AbstractRequest{
                 'Variables' => $variables,
             ]
         );
+
         return $this->createSoapEnvelope($this->actionName, $signedActionBody);
     }
+
     /**
      * aláírandó string összeállítása
-     * ( 2.4.3.1 A digitális aláírás képzése )
+     * ( 2.4.3.1 A digitális aláírás képzése ).
      */
-    protected function getSignatureData(){
+    protected function getSignatureData()
+    {
         /**
-         *  Fizetési tranzakciók ellenőrzése/lekérdezése esetén:
-                o   shop-azonosító
-                o   lekérdezendő tranzakció azonosítója
-                o   maximális rekordszám
-                o   szűrési időszak eleje
-                o   szűrési időszak vége
-
+         *  Fizetési tranzakciók ellenőrzése/lekérdezése esetén:.
          */
         $data = [
             $this->getShopId(),
             $this->getTransactionId(),
-            "",
-            "",
-            "",
+            '',
+            '',
+            '',
         ];
-        return implode("|", $data);
+
+        return implode('|', $data);
     }
 
-    public function transformResponse(GuzzleResponse $response){
+    public function transformResponse(GuzzleResponse $response)
+    {
         return new TransactionDetailsResponse($this, $response->getBody());
     }
 }

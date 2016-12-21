@@ -1,17 +1,17 @@
 <?php
+
 namespace Clapp\OtpHu\Request;
 
 use LSS\Array2XML;
-use SimpleXMLElement;
 use Guzzle\Http\Message\Response as GuzzleResponse;
 use Clapp\OtpHu\Response\GenerateTransactionIdResponse;
 
-
-class GenerateTransactionIdRequest extends AbstractRequest{
-
+class GenerateTransactionIdRequest extends AbstractRequest
+{
     protected $actionName = 'WEBSHOPTRANZAZONGENERALAS';
 
-    public function getData(){
+    public function getData()
+    {
         $signedActionBody = Array2XML::createXML('StartWorkflow',
             [
                 'TemplateName' => [
@@ -22,32 +22,36 @@ class GenerateTransactionIdRequest extends AbstractRequest{
                         '@value' => 'WEBSHOP',
                     ],
                     'isPOSID' => [
-                        '@value' => $this->getShopId()
+                        '@value' => $this->getShopId(),
                     ],
                     'isClientSignature' => [
                         '@attributes' => [
-                            "algorithm" => "SHA512"
+                            'algorithm' => 'SHA512',
                         ],
-                        '@value' => $this->generateSignature()
+                        '@value' => $this->generateSignature(),
                     ],
                 ],
             ]
         );
+
         return $this->createSoapEnvelope($this->actionName, $signedActionBody);
     }
+
     /**
      * aláírandó string összeállítása
-     * ( 2.4.3.1 A digitális aláírás képzése )
+     * ( 2.4.3.1 A digitális aláírás képzése ).
      */
-    protected function getSignatureData(){
-        /**
+    protected function getSignatureData()
+    {
+        /*
          * - Egyedi tranzakció kérés esetén:
          *       - shop-azonosító
          */
         return $this->getShopId();
     }
 
-    public function transformResponse(GuzzleResponse $response){
+    public function transformResponse(GuzzleResponse $response)
+    {
         return new GenerateTransactionIdResponse($this, $response->getBody());
     }
 }

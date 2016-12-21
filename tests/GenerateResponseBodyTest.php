@@ -1,11 +1,10 @@
 <?php
 
 
-
-class GenerateResponseBodyTest extends TestCase{
-
-    public function testGenerateResponseBodyWithPayload(){
-
+class GenerateResponseBodyTest extends TestCase
+{
+    public function testGenerateResponseBodyWithPayload()
+    {
         $payload = [
             'resultset' => [
                 'record' => [
@@ -14,12 +13,11 @@ class GenerateResponseBodyTest extends TestCase{
                 ],
             ],
             'messagelist' => [
-                'message' => 'HIANYZIKSHOPPUBLIKUSKULCS'
-            ]
+                'message' => 'HIANYZIKSHOPPUBLIKUSKULCS',
+            ],
         ];
 
         $this->assertEquals(self::$unknownShopIdResponseBody, $this->generateResponseBody($payload));
-
 
         $payload = [
             'resultset' => [
@@ -29,11 +27,10 @@ class GenerateResponseBodyTest extends TestCase{
                 ],
             ],
             'messagelist' => [
-                'message' => 'SIKERESWEBSHOPFIZETESINDITAS'
-            ]
+                'message' => 'SIKERESWEBSHOPFIZETESINDITAS',
+            ],
         ];
 
         $this->assertEquals(self::$successfulPurchaseResponseBody, $this->generateResponseBody($payload));
-
     }
 }
