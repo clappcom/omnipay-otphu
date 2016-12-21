@@ -2,22 +2,20 @@
 
 use Clapp\OtpHu\Gateway as OtpHuGateway;
 use Omnipay\Omnipay;
-use Clapp\OtpHu\BadResponseException;
-
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as HttpClient;
 
-use Clapp\OtpHu\TransactionFailedException;
-
-class GatewayCompletePurchasesTest extends TestCase{
-    public function testCompletePurchasePending(){
+class GatewayCompletePurchasesTest extends TestCase
+{
+    public function testCompletePurchasePending()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$transactionDetailsPendingResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
@@ -40,13 +38,15 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNull($response->getTransaction()->getRejectionReasonMessage());
     }
-    public function testCompletePurchaseCancelled(){
+
+    public function testCompletePurchaseCancelled()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$transactionDetailsCancelledResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
@@ -66,17 +66,18 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNull($response->getTransaction()->getRejectionReasonMessage());
     }
-    public function testCompletePurchaseRejected(){
+
+    public function testCompletePurchaseRejected()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$transactionDetailsRejectedResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
-
 
         $response = $gateway->completePurchase([
             'transactionId' => 'myTransactionId',
@@ -94,13 +95,15 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNotNull($response->getTransaction()->getRejectionReasonMessage());
     }
-    public function testCompletePurchaseCompleted($transactionId = null){
+
+    public function testCompletePurchaseCompleted($transactionId = null)
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$transactionDetailsCompletedResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
@@ -121,54 +124,56 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNull($response->getTransaction()->getRejectionReasonMessage());
     }
+
     /**
-     * @expectedException Clapp\OtpHu\BadResponseException
+     * @expectedException \Clapp\OtpHu\BadResponseException
      */
-    public function testCompletePurchaseCompletedButMissingResponseCode(){
+    public function testCompletePurchaseCompletedButMissingResponseCode()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, $this->generateResponseBody([
-            "answer" => [
-                "resultset" => [
-                    "record" => [
-                        "transactionid" => "268396fda0543089aceb23cc35331eb9",
-                        "posid" => "#02299991",
-                        "state"=>"FELDOLGOZVA",
+            'answer' => [
+                'resultset' => [
+                    'record' => [
+                        'transactionid' => '268396fda0543089aceb23cc35331eb9',
+                        'posid' => '#02299991',
+                        'state' => 'FELDOLGOZVA',
                         //"responsecode"=>"000",
-                        "shopinformed"=>"true",
-                        "startdate"=>"20161117002756",
-                        "enddate"=>"20161117003021",
-                        "params"=>[
-                            "input"=>[
-                                "backurl"=>"http=>//www.google.com",
-                                "exchange"=>"HUF",
-                                "zipcodeneeded"=>"false",
-                                "narrationneeded"=>"false",
-                                "mailaddressneeded"=>"false",
-                                "countyneeded"=>"FALSE",
-                                "nameneeded"=>"false",
-                                "languagecode"=>"hu",
-                                "countryneeded"=>"FALSE",
-                                "amount"=>"100",
-                                "settlementneeded"=>"false",
-                                "streetneeded"=>"false",
-                                "consumerreceiptneeded"=>"FALSE",
-                                "consumerregistrationneeded"=>"FALSE"
+                        'shopinformed' => 'true',
+                        'startdate' => '20161117002756',
+                        'enddate' => '20161117003021',
+                        'params' => [
+                            'input' => [
+                                'backurl' => 'http=>//www.google.com',
+                                'exchange' => 'HUF',
+                                'zipcodeneeded' => 'false',
+                                'narrationneeded' => 'false',
+                                'mailaddressneeded' => 'false',
+                                'countyneeded' => 'FALSE',
+                                'nameneeded' => 'false',
+                                'languagecode' => 'hu',
+                                'countryneeded' => 'FALSE',
+                                'amount' => '100',
+                                'settlementneeded' => 'false',
+                                'streetneeded' => 'false',
+                                'consumerreceiptneeded' => 'FALSE',
+                                'consumerregistrationneeded' => 'FALSE',
                             ],
-                            "output"=>[
-                                "authorizationcode"=>"405298"
-                            ]
-                        ]
-                    ]
+                            'output' => [
+                                'authorizationcode' => '405298',
+                            ],
+                        ],
+                    ],
                 ],
-                "messagelist"=>[
-                    "message"=>"SIKER"
-                ]
-            ]
+                'messagelist' => [
+                    'message' => 'SIKER',
+                ],
+            ],
         ])));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
@@ -189,13 +194,15 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNull($response->getTransaction()->getRejectionReasonMessage());
     }
-    public function testTransactionDetailsAliasFunction($transactionId = null){
+
+    public function testTransactionDetailsAliasFunction($transactionId = null)
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$transactionDetailsCompletedResponseBody));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());
@@ -216,16 +223,18 @@ class GatewayCompletePurchasesTest extends TestCase{
 
         $this->assertNull($response->getTransaction()->getRejectionReasonMessage());
     }
+
     /**
-     * @expectedException Clapp\OtpHu\BadResponseException
+     * @expectedException \Clapp\OtpHu\BadResponseException
      */
-    public function testInvalidTransactionDetailsResponse(){
+    public function testInvalidTransactionDetailsResponse()
+    {
         $plugin = new MockPlugin();
-        $plugin->addResponse(new Response(200, null, "foobar"));
+        $plugin->addResponse(new Response(200, null, 'foobar'));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
-        $gateway = Omnipay::create("\\".OtpHuGateway::class, $client);
+        $gateway = Omnipay::create('\\'.OtpHuGateway::class, $client);
 
         $gateway->setShopId($this->faker->randomNumber);
         $gateway->setPrivateKey($this->getDummyRsaPrivateKey());

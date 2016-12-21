@@ -1,30 +1,30 @@
 <?php
 
 use Clapp\OtpHu\TransactionIdFactoryUsingPaymentGateway;
-
 use Guzzle\Http\Client as HttpClient;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 
-class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase{
+class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase
+{
     /**
-     * @expectedException Omnipay\Common\Exception\InvalidRequestException
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      */
-    public function testTransactionIdGenerationMissingParameters(){
-
+    public function testTransactionIdGenerationMissingParameters()
+    {
         $transactionIdFactory = new TransactionIdFactoryUsingPaymentGateway();
 
         $response = $transactionIdFactory->generateTransactionId([
-
         ]);
     }
+
     /**
-     * @expectedException Clapp\OtpHu\BadResponseException
+     * @expectedException \Clapp\OtpHu\BadResponseException
      */
-    public function testBadResponse(){
+    public function testBadResponse()
+    {
         $plugin = new MockPlugin();
-        $plugin->addResponse(new Response(200, null, "invalidsoapresponse"));
+        $plugin->addResponse(new Response(200, null, 'invalidsoapresponse'));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
 
@@ -35,10 +35,12 @@ class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase{
             'private_key' => $this->getDummyRsaPrivateKey(),
         ]);
     }
+
     /**
-     * @expectedException Clapp\OtpHu\BadResponseException
+     * @expectedException \Clapp\OtpHu\BadResponseException
      */
-    public function testBadResponseBecauseMissingTransactionId(){
+    public function testBadResponseBecauseMissingTransactionId()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, $this->generateResponseBody([
             'resultset' => [
@@ -49,9 +51,9 @@ class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase{
                 ],
             ],
             'messagelist' => [
-                'message' => 'SIKER'
+                'message' => 'SIKER',
             ],
-            "infolist" => []
+            'infolist' => [],
         ])));
         $client = new HttpClient();
         $client->addSubscriber($plugin);
@@ -64,7 +66,8 @@ class TransactionIdFactoryUsingPaymentGatewayTest extends TestCase{
         ]);
     }
 
-    public function testSuccessfulTransactionIdGeneration(){
+    public function testSuccessfulTransactionIdGeneration()
+    {
         $plugin = new MockPlugin();
         $plugin->addResponse(new Response(200, null, self::$successfulTransactionIdGenerationResponseBody));
         $client = new HttpClient();
