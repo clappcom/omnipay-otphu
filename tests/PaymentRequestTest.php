@@ -4,16 +4,19 @@ use Clapp\OtpHu\Request\PaymentRequest;
 use Guzzle\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
-class PaymentRequestTest extends TestCase{
-
-    public function testLanguageSettings(){
+class PaymentRequestTest extends TestCase
+{
+    public function testLanguageSettings()
+    {
         $request = new PaymentRequest(new HttpClient(), new HttpRequest());
 
         $request->setLanguage('hu');
 
         $this->assertEquals('hu', $request->getLanguage());
     }
-    public function testCurrencySettings(){
+
+    public function testCurrencySettings()
+    {
         $request = new PaymentRequest(new HttpClient(), new HttpRequest());
 
         $request->setCurrency('EUR');

@@ -1,21 +1,27 @@
 <?php
 
-use Clapp\OtpHu\Transaction;
 use Carbon\Carbon;
+use Clapp\OtpHu\Transaction;
 
-class TransactionTest extends TestCase{
+class TransactionTest extends TestCase
+{
     /**
      * @expectedException Exception
      */
-    public function testInvalidTransaction(){
+    public function testInvalidTransaction()
+    {
         $transaction = new Transaction();
         $transaction->getTransactionId();
     }
-    public function testTransactionId(){
+
+    public function testTransactionId()
+    {
         $transaction = Transaction::fromXml(self::$transactionDetailsPendingResponseBody);
         $this->assertNotNull($transaction->getTransactionId());
     }
-    public function testValidStartDateInvalidEndDate(){
+
+    public function testValidStartDateInvalidEndDate()
+    {
         $transaction = Transaction::fromXml(self::$transactionDetailsPendingResponseBody);
         $this->assertNotNull($transaction->getStartDate());
         $this->assertInstanceof(Carbon::class, $transaction->getStartDate());
@@ -23,7 +29,9 @@ class TransactionTest extends TestCase{
         $this->assertNull($transaction->getEndDate());
         //$this->assertInstanceof(Carbon::class, $transaction->getEndDate());
     }
-    public function testValidStartDateValidEndDate(){
+
+    public function testValidStartDateValidEndDate()
+    {
         $transaction = Transaction::fromXml(self::$transactionDetailsCompletedResponseBody);
         $this->assertNotNull($transaction->getStartDate());
         $this->assertInstanceof(Carbon::class, $transaction->getStartDate());
@@ -31,17 +39,23 @@ class TransactionTest extends TestCase{
         $this->assertNotNull($transaction->getEndDate());
         $this->assertInstanceof(Carbon::class, $transaction->getEndDate());
     }
-    public function testSetRawTransactionWithInvalidTransaction(){
+
+    public function testSetRawTransactionWithInvalidTransaction()
+    {
         $transaction = new Transaction();
-        $transaction->setRawTransaction("foobar");
+        $transaction->setRawTransaction('foobar');
     }
-    public function testSetRawTransactionWithEmptyTransaction(){
+
+    public function testSetRawTransactionWithEmptyTransaction()
+    {
         $transaction = new Transaction();
-        $transaction->setRawTransaction(new SimpleXMLElement("<a></a>"));
+        $transaction->setRawTransaction(new SimpleXMLElement('<a></a>'));
     }
-    public function testEmptyStartDate(){
+
+    public function testEmptyStartDate()
+    {
         $transaction = new Transaction();
-        $transaction->setRawTransaction(new SimpleXMLElement("<a></a>"));
+        $transaction->setRawTransaction(new SimpleXMLElement('<a></a>'));
         $this->assertNull($transaction->getStartDate());
     }
 }

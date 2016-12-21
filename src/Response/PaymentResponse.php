@@ -1,24 +1,26 @@
 <?php
 /**
- * Contains Clapp\OtpHu\Response\PaymentResponse
+ * Contains Clapp\OtpHu\Response\PaymentResponse.
  */
+
 namespace Clapp\OtpHu\Response;
 
+use Clapp\OtpHu\BadResponseException;
+use Exception;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\RequestInterface;
 use SimpleXMLElement;
-use Clapp\OtpHu\BadResponseException;
-use Clapp\OtpHu\Response\UnknownShopIdResponse;
-use Exception;
+
 /**
- * Represents a response for Gateway::purchase()->send()
+ * Represents a response for Gateway::purchase()->send().
  */
-class PaymentResponse extends AbstractResponse implements RedirectResponseInterface{
+class PaymentResponse extends AbstractResponse implements RedirectResponseInterface
+{
     /**
-     * https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId={0}&azonosito={1}&nyelvkod={2}
+     * https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas?posId={0}&azonosito={1}&nyelvkod={2}.
      */
-    protected $redirectUrl = "https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas";
+    protected $redirectUrl = 'https://www.otpbankdirekt.hu/webshop/do/webShopVasarlasInditas';
     /**
      * @var string status message returned by the gateway
      */
@@ -27,53 +29,59 @@ class PaymentResponse extends AbstractResponse implements RedirectResponseInterf
      * @var array list of `$messageString`s that are considered as a valid response
      */
     public static $validMessageStrings = [
-        "SIKERESWEBSHOPFIZETESINDITAS"
+        'SIKERESWEBSHOPFIZETESINDITAS',
     ];
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param RequestInterface $request the initiating request.
-     * @param mixed $data
+     * @param mixed            $data
      */
-    public function __construct(RequestInterface $request, $data){
+    public function __construct(RequestInterface $request, $data)
+    {
         parent::__construct($request, $data);
 
         //var_dump($data."");
 
         $this->messageString = $this->parseResponseData($data);
     }
+
     /**
-     * Parse the response as an xml string
+     * Parse the response as an xml string.
      *
-     * @param  string $data xml string returned by the gateway
+     * @param string $data xml string returned by the gateway
+     *
      * @throws UnknownShopIdResponse
      * @throws BadResponseException
+     *
      * @return string messageString from the gateway
      */
-    protected function parseResponseData ($data){
+    protected function parseResponseData($data)
+    {
         try {
             /**
-             * try to parse the successful response message
+             * try to parse the successful response message.
              */
             $payload = base64_decode((new SimpleXMLElement($data))->xpath('//result')[0]->__toString());
             $messageString = (new SimpleXMLElement($payload))->xpath('//message')[0]->__toString();
-        }catch(Exception $e){
+        } catch (Exception $e) {
             /**
-             * we cannot parse the response
+             * we cannot parse the response.
              */
             $messageString = null;
         }
 
-        if (in_array($messageString, self::$validMessageStrings)){
+        if (in_array($messageString, self::$validMessageStrings)) {
             return $messageString;
         }
 
         /**
-         * we have an invalid $messageString
+         * we have an invalid $messageString.
          *
          * create the proper exception based on the value of $messageString
          */
-        switch($messageString){
+        switch ($messageString) {
             case 'HIANYZIKSHOPPUBLIKUSKULCS':
                 throw new UnknownShopIdResponse($data);
             break;
@@ -85,33 +93,37 @@ class PaymentResponse extends AbstractResponse implements RedirectResponseInterf
 
     /**
      * sikeresen kifizette-e az összeget a felhasználó
-     * nem, mivel ez mindig redirectel, hiszen majd a banki felületen fog fizetni
+     * nem, mivel ez mindig redirectel, hiszen majd a banki felületen fog fizetni.
      */
-    public function isSuccessful(){
+    public function isSuccessful()
+    {
         return false;
     }
+
     /**
      * Does the response require a redirect?
      *
-     * @return boolean
+     * @return bool
      */
     public function isRedirect()
     {
         return true;
     }
+
     /**
      * Gets the redirect target url.
      *
      * @return string
      */
-    public function getRedirectUrl(){
+    public function getRedirectUrl()
+    {
         $params = [
-            'posId' => $this->getRequest()->getShopId(),
+            'posId'     => $this->getRequest()->getShopId(),
             'azonosito' => $this->getRequest()->getTransactionId(),
-            'nyelvkod' => $this->getRequest()->getLanguage(),
+            'nyelvkod'  => $this->getRequest()->getLanguage(),
         ];
 
-        return $this->redirectUrl . "?" . http_build_query($params);
+        return $this->redirectUrl.'?'.http_build_query($params);
     }
 
     /**
@@ -119,8 +131,9 @@ class PaymentResponse extends AbstractResponse implements RedirectResponseInterf
      *
      * @return string
      */
-    public function getRedirectMethod(){
-        return "GET";
+    public function getRedirectMethod()
+    {
+        return 'GET';
     }
 
     /**
@@ -128,9 +141,11 @@ class PaymentResponse extends AbstractResponse implements RedirectResponseInterf
      *
      * @return array
      */
-    public function getRedirectData(){
+    public function getRedirectData()
+    {
         return [];
     }
+
     /**
      * Get the transaction ID as generated by the merchant website.
      *
